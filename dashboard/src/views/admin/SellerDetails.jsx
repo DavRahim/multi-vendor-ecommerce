@@ -14,7 +14,7 @@ const SellerDetails = () => {
           </div>
           <div className='w-4/12'>
             <div>
-                
+                <div></div>
             </div>
 
           </div>
