@@ -12,6 +12,12 @@ const SellerDetails = () => {
               <img className='w-full h-[230px]' src={man} alt="" />
             </div>
           </div>
+          <div className='w-4/12'>
+            <div>
+                
+            </div>
+
+          </div>
         </div>
       </div>
     </div>
