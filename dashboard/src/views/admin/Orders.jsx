@@ -51,7 +51,7 @@ const Orders = () => {
                 <div className="py-4 w-[18%]">pending</div>
                 <div className="py-4 w-[18%]">pending</div>
                 <div className="py-4 w-[18%]">
-                  <Link>view</Link>
+                  <Link to={`/admin/dashboard/order/details/1`}>view</Link>
                 </div>
                 <div onClick={() => setShow(!show)} className="py-4 w-[8%]">
                   <BsArrowBarDown />

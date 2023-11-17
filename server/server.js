@@ -10,7 +10,7 @@ require("dotenv").config();
 
 // middleware
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["http://localhost:5173", "http://localhost:5174"],
   credentials: true,
   optionSuccessStatus: 200,
 };
@@ -20,6 +20,13 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 app.use("/api", require("./routes/authRoutes"));
+app.use("/api", require("./routes/dashborad/categoryRoutes"));
+app.use("/api", require("./routes/dashborad/productRoutes"));
+app.use("/api", require("./routes/dashborad/sellerRoutes"));
+
+//Client sever
+app.use("/api/home", require("./routes/home/homeRoutes")); 
+
 
 app.get("/", (req, res) => res.send("shop is ready?!!!"));
 const port = process.env.PORT || 5000;

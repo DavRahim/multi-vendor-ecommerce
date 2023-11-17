@@ -37,15 +37,16 @@ const AdminLogin = () => {
     alignItem: "center",
   }
   useEffect(() => {
+     if (successMessage) {
+       toast.success(successMessage);
+       dispatch(messageClear);
+       navigate("/");
+     }
     if (errorMessage) {
       toast.error(errorMessage);
       dispatch(messageClear);
     }
-    if (successMessage) {
-      toast.success(successMessage);
-      dispatch(messageClear);
-     navigate("/")
-    }
+   
   }, [errorMessage, successMessage]);
   return (
     <div className="min-w-screen min-h-screen bg-[#161d31] flex justify-center items-center">

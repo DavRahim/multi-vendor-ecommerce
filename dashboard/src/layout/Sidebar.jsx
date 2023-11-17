@@ -1,16 +1,18 @@
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from 'react-redux'
 import logo from '../assets/logo.png'
 import { useEffect, useState } from "react";
 import { getNavs } from "../navigation";
 import { BiLogInCircle } from "react-icons/bi";
 const Sidebar = ({ showSidebar, setShowSidebar }) => {
+  const {role} = useSelector(state => state.auth)
   const [allNav, setAllNav] = useState([]);
   const { pathname } = useLocation();
   useEffect(() => {
-    const navs = getNavs("admin");
+    const navs = getNavs(role);
     setAllNav(navs);
   }, []);
-  console.log(allNav);
+  // console.log(allNav);
   return (
     <div>
       <div

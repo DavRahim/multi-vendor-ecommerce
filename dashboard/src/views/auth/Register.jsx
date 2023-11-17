@@ -1,9 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineGooglePlus, AiOutlineGithub } from "react-icons/ai";
+import toast from "react-hot-toast";
 import { FiFacebook } from "react-icons/fi";
 import { CiTwitter } from "react-icons/ci";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {useSelector, useDispatch} from 'react-redux'
+import { PropagateLoader } from "react-spinners";
+import { overRightStyle } from "../../utils/utils";
+import { messageClear, seller_register } from "../../store/reducers/authReducer";
+
 const Register = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+  const { loader, successMessage, errorMessage } = useSelector(
+    (state) => state.auth
+  );
+
   const [state, setState] = useState({
     name: "",
     email: "",
@@ -17,8 +30,22 @@ const Register = () => {
   };
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(seller_register(state))
     console.log(state);
   }
+
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear);
+      navigate('/')
+    }
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear);
+    }
+  }, [successMessage, errorMessage]);
+   
   return (
     <div className="min-w-screen min-h-screen bg-[#161d31] flex justify-center items-center">
       <div className="w-[350px] text-[#d0d2d6] p-4 rounded-md">
@@ -79,8 +106,15 @@ const Register = () => {
                 I agree to privacy policy & terms{" "}
               </label>
             </div>
-            <button className="bg-blue-500 w-full hover:shadow-blue-500/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-3">
-              Sing Up
+            <button   
+              disabled={loader ? true : false}
+              className="bg-blue-500 w-full hover:shadow-blue-500/50 hover:shadow-lg text-white rounded-md px-7 py-2 mb-5"
+            >
+              {loader ? (
+                <PropagateLoader color="#fff" cssOverride={overRightStyle} />
+              ) : (
+                "Signup"
+              )}
             </button>
             <div className="flex items-center mb-3 gap-3 justify-center">
               <p>
