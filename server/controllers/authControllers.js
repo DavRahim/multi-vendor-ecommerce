@@ -1,6 +1,6 @@
 const formidable = require("formidable");
 const adminModel = require("../models/adminModel");
-const sellerCustomer = require("../models/chat/sellerCustomer");
+const sellerCustomerModel = require("../models/chat/sellerCustomerModel");
 const sellerModal = require("../models/sellerModal");
 const { responseReturn } = require("../utils/response");
 const { createToken } = require("../utils/tokenCreate");
@@ -51,7 +51,7 @@ class authControllers {
           method: " manually",
           shopInfo: {},
         });
-        await sellerCustomer.create({
+        await sellerCustomerModel.create({
           myId: seller.id,
         });
         const token = await createToken({ id: seller.id, role: seller.role });
@@ -166,6 +166,18 @@ class authControllers {
         message: "Profile info add success",
         userInfo,
       });
+    } catch (error) {
+      responseReturn(res, 500, { error: error.message });
+    }
+  };
+
+  logout = async (req, res) => {
+    try {
+      res.cookie("accessToken", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+      });
+      responseReturn(res, 200, { message: "logout success" });
     } catch (error) {
       responseReturn(res, 500, { error: error.message });
     }

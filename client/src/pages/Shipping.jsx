@@ -1,20 +1,22 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Footer from "../components/Footer";
 import { useState } from "react";
 
-import product1 from "../assets/products/1.webp";
-import product2 from "../assets/products/2.webp";
-
+import { useDispatch, useSelector } from "react-redux";
+import { place_order } from "../store/Reducers/orderReducer";
 
 const Shipping = () => {
-  const products = [product1, product2];
-   const {
-     state: { price, shipping_fee, items },
-   } = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userInfo } = useSelector((state) => state.auth);
 
+  const {
+    state: { products, price, shipping_fee, items },
+  } = useLocation();
 
+  console.log(price, shipping_fee, items);
   const [state, setState] = useState({
     name: "",
     address: "",
@@ -37,6 +39,20 @@ const Shipping = () => {
     if (name && address && phone && post && province && city && area) {
       setRes(true);
     }
+  };
+
+  const placeOrder = () => {
+    dispatch(
+      place_order({
+        price,
+        products,
+        shipping_fee,
+        shippingInfo: state,
+        userId: userInfo.id,
+        navigate,
+        items,
+      })
+    );
   };
   return (
     <div>
@@ -201,23 +217,19 @@ const Shipping = () => {
                     <div className="flex justify-start items-center">
                       <h2 className="text-md text-slate-600">Rahim store</h2>
                     </div>
-                    {products.map((pt, j) => (
+                    {p.products.map((pt, j) => (
                       <div key={j} className="w-full flex flex-wrap">
                         <div className="flex sm:w-full gap-2 w-7/12">
                           <div className="flex gap-2 justify-start items-center">
                             <img
                               className="w-[80px] h-[80px]"
-                              src={pt}
-                              // src={pt.productInfo.images[0]}
+                              src={pt.productInfo.images[0]}
                               alt="product image"
                             />
                             <div className="pr-4 text-slate-600">
-                              <h2 className="text-md">
-                                Oin k{/* {pt.productInfo.name} */}
-                              </h2>
+                              <h2 className="text-md">{pt.productInfo.name}</h2>
                               <span className="text-sm">
-                                Brand : Easy
-                                {/* Brand : {pt.productInfo.brand} */}
+                                Brand : {pt.productInfo.brand}
                               </span>
                             </div>
                           </div>
@@ -225,19 +237,17 @@ const Shipping = () => {
                         <div className="flex justify-end w-5/12 sm:w-full sm:mt-3">
                           <div className="pl-4 sm:pl-0">
                             <h2 className="text-lg text-orange-500">
-                              $ 70
-                              {/* {pt.productInfo.price -
-                                  Math.floor(
-                                    (pt.productInfo.price *
-                                      pt.productInfo.discount) /
-                                      100
-                                  )} */}
+                              {pt.productInfo.price -
+                                Math.floor(
+                                  (pt.productInfo.price *
+                                    pt.productInfo.discount) /
+                                    100
+                                )}
                             </h2>
                             <p className="line-through">
-                              {/* ${pt.productInfo.price} */}$ 90
+                              $ {pt.productInfo.price}
                             </p>
-                            {/* <p>-{pt.productInfo.discount}%</p> */}
-                            <p>-70 %</p>
+                            <p>-{pt.productInfo.discount}%</p>
                           </div>
                         </div>
                       </div>
@@ -251,28 +261,25 @@ const Shipping = () => {
                 <div className="bg-white font-medium p-5 text-slate-600 flex flex-col gap-3">
                   <h2 className="text-xl font-semibold">Order Summary</h2>
                   <div className="flex justify-between items-center">
-                    {/* <span>Items Total({price})</span> */}
-                    <span>Items Total 90</span>
-                    <span>$ 60</span>
+                    <span>Items Total({price})</span>
+
+                    <span>${price}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Delivery Fee</span>
-                    <span>$ 70</span>
+                    <span>${shipping_fee}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Total Payment</span>
-                    {/* <span>${price + shipping_fee}</span> */}
-                    <span>$ 70</span>
+                    <span>${price + shipping_fee}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span>Total</span>
-         
-                    <span>$ 44</span>
-                    {/* <span>${price + shipping_fee}</span>
-                      <span>${price + shipping_fee}</span> */}
+
+                    <span>${price + shipping_fee}</span>
                   </div>
                   <button
-                    //   onClick={placeOrder}
+                    onClick={placeOrder}
                     disabled={res ? false : true}
                     className={`px-5 py-[6px] rounded-sm hover:shadow-orange-500/20 hover:shadow-lg ${
                       res ? "bg-orange-500" : "bg-orange-300"

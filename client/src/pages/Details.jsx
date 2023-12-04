@@ -4,7 +4,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import {Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 // import { useDispatch, useSelector } from "react-redux";
@@ -24,218 +24,234 @@ import { AiFillGithub, AiOutlineTwitter } from "react-icons/ai";
 import toast from "react-hot-toast";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import product1 from "../assets/products/1.webp";
-import product2 from "../assets/products/2.webp";
-import product3 from "../assets/products/3.webp";
-import product4 from "../assets/products/4.webp";
-import product5 from "../assets/products/5.webp";
-import product6 from "../assets/products/6.webp";
-import product7 from "../assets/products/7.webp";
+// import product1 from "../assets/products/1.webp";
+// import product2 from "../assets/products/2.webp";
+// import product3 from "../assets/products/3.webp";
+// import product4 from "../assets/products/4.webp";
+// import product5 from "../assets/products/5.webp";
+// import product6 from "../assets/products/6.webp";
+// import product7 from "../assets/products/7.webp";
 import Reviews from "../components/Reviews";
+import { useDispatch, useSelector } from "react-redux";
+import { get_product } from "../store/Reducers/homeReducer";
+import {
+  add_to_card,
+  add_to_wishlist,
+  messageClear,
+} from "../store/Reducers/cardReducer";
 
 const Details = () => {
-  const product = {
-    _id: {
-      $oid: "654a61f6cc4a8902178fb1c3",
-    },
-    sellerId: {
-      $oid: "654534c3af0febfb13ebfef4",
-    },
-    name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-    slug: "sunslick-smapo",
-    category: "mobile",
-    brand: "smapo",
-    price: 12,
-    stock: 10,
-    discount: 22,
-    description:
-      "Perfumes are a great way to help girls and boys feel fresh without the overpowering element of perfume or cologne. For men, apply the body spray on your chest and neck, and under your armpits. For women, apply the body spray on your pulse points, clothes, and hair. Body sprays are a great way to help girls and boys feel fresh without the overpowering element of perfume or cologne. For men, apply the body spray on your chest and neck, and under your armpits. For women, apply the body spray on your pulse points, clothes, and hair.",
-    shopName: "Rahim sports",
-    images: [
-      product1,
-      product2,
-      product3,
-      product4,
-      product5,
-      product6,
-      product7,
-      product4,
-      product5,
-      product6,
-      product7,
-    ],
-    rating: 4,
-    createdAt: {
-      $date: "2023-11-07T16:12:38.954Z",
-    },
-    updatedAt: {
-      $date: "2023-11-11T17:37:45.684Z",
-    },
-    __v: 0,
-  };
-  
-  const moreProducts = [
-    {
-      _id: {
-        $oid: "654a61f6cc4a8902178fb1c3",
-      },
-      sellerId: {
-        $oid: "654534c3af0febfb13ebfef4",
-      },
-      name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-      slug: "sunslick-smapo",
-      category: "mobile",
-      brand: "smapo",
-      price: 12,
-      stock: 12,
-      discount: 22,
-      rating: 3,
-      description: "sZFvzsdf zsdvzd zsfv v",
-      shopName: "Rahim sports",
-      images: [product1, product2, product3, product4, product5, product6],
+  // const product = {
+  //   _id: {
+  //     $oid: "654a61f6cc4a8902178fb1c3",
+  //   },
+  //   sellerId: {
+  //     $oid: "654534c3af0febfb13ebfef4",
+  //   },
+  //   name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
+  //   slug: "sunslick-smapo",
+  //   category: "mobile",
+  //   brand: "smapo",
+  //   price: 12,
+  //   stock: 10,
+  //   discount: 22,
+  //   description:
+  //     "Perfumes are a great way to help girls and boys feel fresh without the overpowering element of perfume or cologne. For men, apply the body spray on your chest and neck, and under your armpits. For women, apply the body spray on your pulse points, clothes, and hair. Body sprays are a great way to help girls and boys feel fresh without the overpowering element of perfume or cologne. For men, apply the body spray on your chest and neck, and under your armpits. For women, apply the body spray on your pulse points, clothes, and hair.",
+  //   shopName: "Rahim sports",
+  //   images: [
+  //     product1,
+  //     product2,
+  //     product3,
+  //     product4,
+  //     product5,
+  //     product6,
+  //     product7,
+  //     product4,
+  //     product5,
+  //     product6,
+  //     product7,
+  //   ],
+  //   rating: 4,
+  //   createdAt: {
+  //     $date: "2023-11-07T16:12:38.954Z",
+  //   },
+  //   updatedAt: {
+  //     $date: "2023-11-11T17:37:45.684Z",
+  //   },
+  //   __v: 0,
+  // };
 
-      createdAt: {
-        $date: "2023-11-07T16:12:38.954Z",
-      },
-      updatedAt: {
-        $date: "2023-11-11T17:37:45.684Z",
-      },
-      __v: 0,
-    },
-    {
-      _id: {
-        $oid: "654a61f6cc4a8902178fb1c3",
-      },
-      sellerId: {
-        $oid: "654534c3af0febfb13ebfef4",
-      },
-      name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-      slug: "sunslick-smapo",
-      category: "mobile",
-      brand: "smapo",
-      price: 12,
-      stock: 12,
-      discount: 22,
-      rating: 3,
-      description: "sZFvzsdf zsdvzd zsfv v",
-      shopName: "Rahim sports",
-      images: [ product2, product3, product4, product5, product6],
+  // const moreProducts = [
+  //   {
+  //     _id: {
+  //       $oid: "654a61f6cc4a8902178fb1c3",
+  //     },
+  //     sellerId: {
+  //       $oid: "654534c3af0febfb13ebfef4",
+  //     },
+  //     name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
+  //     slug: "sunslick-smapo",
+  //     category: "mobile",
+  //     brand: "smapo",
+  //     price: 12,
+  //     stock: 12,
+  //     discount: 22,
+  //     rating: 3,
+  //     description: "sZFvzsdf zsdvzd zsfv v",
+  //     shopName: "Rahim sports",
+  //     images: [product1, product2, product3, product4, product5, product6],
 
-      createdAt: {
-        $date: "2023-11-07T16:12:38.954Z",
-      },
-      updatedAt: {
-        $date: "2023-11-11T17:37:45.684Z",
-      },
-      __v: 0,
-    },
-  ];
-  const relatedProducts = [
-    {
-      _id: {
-        $oid: "654a61f6cc4a8902178fb1c3",
-      },
-      sellerId: {
-        $oid: "654534c3af0febfb13ebfef4",
-      },
-      name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-      slug: "sunslick-smapo",
-      category: "mobile",
-      brand: "smapo",
-      price: 12,
-      stock: 12,
-      discount: 22,
-      description: "sZFvzsdf zsdvzd zsfv v",
-      shopName: "Rahim sports",
-      images: [product2, product3, product4, product5, product6],
-      rating: 0,
-      createdAt: {
-        $date: "2023-11-07T16:12:38.954Z",
-      },
-      updatedAt: {
-        $date: "2023-11-11T17:37:45.684Z",
-      },
-      __v: 0,
-    },
-    {
-      _id: {
-        $oid: "654a61f6cc4a8902178fb1c3",
-      },
-      sellerId: {
-        $oid: "654534c3af0febfb13ebfef4",
-      },
-      name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-      slug: "sunslick-smapo",
-      category: "mobile",
-      brand: "smapo",
-      price: 12,
-      stock: 12,
-      discount: 22,
-      description: "sZFvzsdf zsdvzd zsfv v",
-      shopName: "Rahim sports",
-      images: [product2, product3, product4, product5, product6],
-      rating: 0,
-      createdAt: {
-        $date: "2023-11-07T16:12:38.954Z",
-      },
-      updatedAt: {
-        $date: "2023-11-11T17:37:45.684Z",
-      },
-      __v: 0,
-    },
-    {
-      _id: {
-        $oid: "654a61f6cc4a8902178fb1c3",
-      },
-      sellerId: {
-        $oid: "654534c3af0febfb13ebfef4",
-      },
-      name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-      slug: "sunslick-smapo",
-      category: "mobile",
-      brand: "smapo",
-      price: 12,
-      stock: 12,
-      discount: 22,
-      description: "sZFvzsdf zsdvzd zsfv v",
-      shopName: "Rahim sports",
-      images: [ product3, product4, product5, product6],
-      rating: 0,
-      createdAt: {
-        $date: "2023-11-07T16:12:38.954Z",
-      },
-      updatedAt: {
-        $date: "2023-11-11T17:37:45.684Z",
-      },
-      __v: 0,
-    },
-    {
-      _id: {
-        $oid: "654a61f6cc4a8902178fb1c3",
-      },
-      sellerId: {
-        $oid: "654534c3af0febfb13ebfef4",
-      },
-      name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-      slug: "sunslick-smapo",
-      category: "mobile",
-      brand: "smapo",
-      price: 12,
-      stock: 12,
-      discount: 22,
-      description: "sZFvzsdf zsdvzd zsfv v",
-      shopName: "Rahim sports",
-      images: [ product4, product5, product6],
-      rating: 0,
-      createdAt: {
-        $date: "2023-11-07T16:12:38.954Z",
-      },
-      updatedAt: {
-        $date: "2023-11-11T17:37:45.684Z",
-      },
-      __v: 0,
-    },
-  ];
+  //     createdAt: {
+  //       $date: "2023-11-07T16:12:38.954Z",
+  //     },
+  //     updatedAt: {
+  //       $date: "2023-11-11T17:37:45.684Z",
+  //     },
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: {
+  //       $oid: "654a61f6cc4a8902178fb1c3",
+  //     },
+  //     sellerId: {
+  //       $oid: "654534c3af0febfb13ebfef4",
+  //     },
+  //     name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
+  //     slug: "sunslick-smapo",
+  //     category: "mobile",
+  //     brand: "smapo",
+  //     price: 12,
+  //     stock: 12,
+  //     discount: 22,
+  //     rating: 3,
+  //     description: "sZFvzsdf zsdvzd zsfv v",
+  //     shopName: "Rahim sports",
+  //     images: [ product2, product3, product4, product5, product6],
+
+  //     createdAt: {
+  //       $date: "2023-11-07T16:12:38.954Z",
+  //     },
+  //     updatedAt: {
+  //       $date: "2023-11-11T17:37:45.684Z",
+  //     },
+  //     __v: 0,
+  //   },
+  // ];
+  // const relatedProducts = [
+  //   {
+  //     _id: {
+  //       $oid: "654a61f6cc4a8902178fb1c3",
+  //     },
+  //     sellerId: {
+  //       $oid: "654534c3af0febfb13ebfef4",
+  //     },
+  //     name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
+  //     slug: "sunslick-smapo",
+  //     category: "mobile",
+  //     brand: "smapo",
+  //     price: 12,
+  //     stock: 12,
+  //     discount: 22,
+  //     description: "sZFvzsdf zsdvzd zsfv v",
+  //     shopName: "Rahim sports",
+  //     images: [product2, product3, product4, product5, product6],
+  //     rating: 0,
+  //     createdAt: {
+  //       $date: "2023-11-07T16:12:38.954Z",
+  //     },
+  //     updatedAt: {
+  //       $date: "2023-11-11T17:37:45.684Z",
+  //     },
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: {
+  //       $oid: "654a61f6cc4a8902178fb1c3",
+  //     },
+  //     sellerId: {
+  //       $oid: "654534c3af0febfb13ebfef4",
+  //     },
+  //     name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
+  //     slug: "sunslick-smapo",
+  //     category: "mobile",
+  //     brand: "smapo",
+  //     price: 12,
+  //     stock: 12,
+  //     discount: 22,
+  //     description: "sZFvzsdf zsdvzd zsfv v",
+  //     shopName: "Rahim sports",
+  //     images: [product2, product3, product4, product5, product6],
+  //     rating: 0,
+  //     createdAt: {
+  //       $date: "2023-11-07T16:12:38.954Z",
+  //     },
+  //     updatedAt: {
+  //       $date: "2023-11-11T17:37:45.684Z",
+  //     },
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: {
+  //       $oid: "654a61f6cc4a8902178fb1c3",
+  //     },
+  //     sellerId: {
+  //       $oid: "654534c3af0febfb13ebfef4",
+  //     },
+  //     name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
+  //     slug: "sunslick-smapo",
+  //     category: "mobile",
+  //     brand: "smapo",
+  //     price: 12,
+  //     stock: 12,
+  //     discount: 22,
+  //     description: "sZFvzsdf zsdvzd zsfv v",
+  //     shopName: "Rahim sports",
+  //     images: [ product3, product4, product5, product6],
+  //     rating: 0,
+  //     createdAt: {
+  //       $date: "2023-11-07T16:12:38.954Z",
+  //     },
+  //     updatedAt: {
+  //       $date: "2023-11-11T17:37:45.684Z",
+  //     },
+  //     __v: 0,
+  //   },
+  //   {
+  //     _id: {
+  //       $oid: "654a61f6cc4a8902178fb1c3",
+  //     },
+  //     sellerId: {
+  //       $oid: "654534c3af0febfb13ebfef4",
+  //     },
+  //     name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
+  //     slug: "sunslick-smapo",
+  //     category: "mobile",
+  //     brand: "smapo",
+  //     price: 12,
+  //     stock: 12,
+  //     discount: 22,
+  //     description: "sZFvzsdf zsdvzd zsfv v",
+  //     shopName: "Rahim sports",
+  //     images: [ product4, product5, product6],
+  //     rating: 0,
+  //     createdAt: {
+  //       $date: "2023-11-07T16:12:38.954Z",
+  //     },
+  //     updatedAt: {
+  //       $date: "2023-11-11T17:37:45.684Z",
+  //     },
+  //     __v: 0,
+  //   },
+  // ];
+
+  const navigate = useNavigate();
+  const { slug } = useParams();
+  const dispatch = useDispatch();
+  const { product, relatedProducts, moreProducts } = useSelector(
+    (state) => state.home
+  );
+  const { userInfo } = useSelector((state) => state.auth);
+  const { errorMessage, successMessage } = useSelector((state) => state.card);
 
   const [state, setState] = useState("reviews");
   const [image, setImage] = useState("");
@@ -283,6 +299,85 @@ const Details = () => {
       items: 1,
     },
   };
+
+  const add_wishlist = () => {
+    if (userInfo) {
+      dispatch(
+        add_to_wishlist({
+          userId: userInfo.id,
+          productId: product._id,
+          name: product.name,
+          price: product.price,
+          image: product.images[0],
+          discount: product.discount,
+          rating: product.rating,
+          slug: product.slug,
+        })
+      );
+    } else {
+      navigate("/login");
+    }
+  };
+
+  const add_card = () => {
+    if (userInfo) {
+      dispatch(
+        add_to_card({
+          userId: userInfo.id,
+          quantity,
+          productId: product._id,
+        })
+      );
+    } else {
+      navigate("/login");
+    }
+  };
+  useEffect(() => {
+    if (errorMessage) {
+      toast.error(errorMessage);
+      dispatch(messageClear());
+    }
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+    }
+  }, [errorMessage, successMessage, dispatch]);
+
+  useEffect(() => {
+    dispatch(get_product(slug));
+  }, [slug, dispatch]);
+
+  const buy = () => {
+    let price = 0;
+    if (product.discount !== 0) {
+      price =
+        product.price - Math.floor((product.price * product.discount) / 100);
+    } else {
+      price = product.price;
+    }
+    const obj = [
+      {
+        sellerId: product.sellerId,
+        shopName: product.shopName,
+        price: quantity * (price - Math.floor((price * 5) / 100)),
+        products: [
+          {
+            quantity,
+            productInfo: product,
+          },
+        ],
+      },
+    ];
+    navigate("/shipping", {
+      state: {
+        products: obj,
+        price: price * quantity,
+        shipping_fee: 85,
+        items: 1,
+      },
+    });
+  };
+
   return (
     <div>
       <Header />
@@ -302,11 +397,11 @@ const Details = () => {
             <span className="pt-1">
               <MdOutlineKeyboardArrowRight />
             </span>
-            <Link to="/">{product.category}</Link>
+            <Link to="/">{product?.category}</Link>
             <span className="pt-1">
               <MdOutlineKeyboardArrowRight />
             </span>
-            <span>{product.name}</span>
+            <span>{product?.name}</span>
           </div>
         </div>
       </div>
@@ -322,14 +417,14 @@ const Details = () => {
                 />
               </div>
               <div className="py-3">
-                {product.images && (
+                {product?.images && (
                   <Carousel
                     autoPlay={true}
                     infinite={true}
                     responsive={responsive}
                     transitionDuration={500}
                   >
-                    {product.images.map((img, i) => {
+                    {product?.images?.map((img, i) => {
                       return (
                         <div key={i} onClick={() => setImage(img)}>
                           <img
@@ -346,7 +441,7 @@ const Details = () => {
             </div>
             <div className="flex flex-col gap-5">
               <div className="text-3xl text-slate-600 font-bold">
-                <h2>{product.name}</h2>
+                <h2>{product?.name}</h2>
               </div>
               <div className="flex justify-start items-center gap-4">
                 <div className="flex text-xl">
@@ -357,28 +452,31 @@ const Details = () => {
               <div className="text-2xl text-red-500 font-bold flex gap-3">
                 {product.discount !== 0 ? (
                   <>
-                    <h2 className="line-through">${product.price}</h2>
+                    <h2 className="line-through">${product?.price}</h2>
                     <h2>
                       $
-                      {product.price -
+                      {product?.price -
                         Math.floor(
-                          (product.price * product.discount) / 100
+                          (product?.price * product?.discount) / 100
                         )}{" "}
-                      (-{product.discount}%)
+                      (-{product?.discount}%)
                     </h2>
                   </>
                 ) : (
-                  <h2>Price : ${product.price}</h2>
+                  <h2>Price : ${product?.price}</h2>
                 )}
               </div>
               <div className="text-slate-600">
-                <p>{product.description}</p>
+                <p>{product?.description}</p>
               </div>
               <div className="flex gap-3 pb-10 border-b">
                 {product.stock ? (
                   <>
                     <div className="flex bg-slate-200 h-[50px] justify-center items-center text-xl">
-                      <div className="px-6 cursor-pointer">-</div>
+                      <div onClick={dec} className="px-6 cursor-pointer">
+                        {" "}
+                        -
+                      </div>
                       <div className="px-5">{quantity}</div>
                       <div onClick={inc} className="px-6 cursor-pointer">
                         +
@@ -386,7 +484,7 @@ const Details = () => {
                     </div>
                     <div>
                       <button
-                        //   onClick={add_card}
+                        onClick={add_card}
                         className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-purple-500/40 bg-purple-500 text-white"
                       >
                         Add To Card
@@ -398,7 +496,7 @@ const Details = () => {
                 )}
                 <div>
                   <div
-                    //   onClick={add_wishlist}
+                    onClick={add_wishlist}
                     className="h-[50px] w-[50px] flex justify-center items-center cursor-pointer hover:shadow-lg hover:shadow-cyan-500/40 bg-cyan-500 text-white"
                   >
                     <AiFillHeart />
@@ -457,7 +555,7 @@ const Details = () => {
               <div className="flex gap-3">
                 {product.stock ? (
                   <button
-                    //   onClick={buy}
+                    onClick={buy}
                     className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-emerald-500/40 bg-emerald-500 text-white"
                   >
                     Buy Now
@@ -505,9 +603,9 @@ const Details = () => {
                 </div>
                 <div>
                   {state === "reviews" ? (
-                    <Reviews/>
+                    <Reviews product={product} />
                   ) : (
-                    //   <Reviews product={product} />
+                    
                     <p className="py-5 text-slate-600">{product.description}</p>
                   )}
                 </div>
@@ -521,7 +619,11 @@ const Details = () => {
                 <div className="flex flex-col gap-5 mt-3 border p-3">
                   {moreProducts.map((p, i) => {
                     return (
-                      <Link key={i} className="block">
+                      <Link
+                        to={`/product/details/${p.slug}`}
+                        key={i}
+                        className="block"
+                      >
                         <div className="relative h-[270px]">
                           <img className="w-full h-full" src={p.images[0]} />
                           {p.discount !== 0 && (
@@ -574,7 +676,7 @@ const Details = () => {
               {relatedProducts.map((p, i) => {
                 return (
                   <SwiperSlide key={i}>
-                    <Link className="block">
+                    <Link to={`/product/details/${p.slug}`} className="block">
                       <div className="relative h-[270px]">
                         <div className="w-full h-full">
                           <img className="w-full h-full" src={p.images[0]} />

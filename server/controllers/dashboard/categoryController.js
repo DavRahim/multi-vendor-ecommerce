@@ -46,6 +46,46 @@ class categoryController {
     });
   };
 
+  
+  // get_category = async (req, res) => {
+  //   const { page, searchValue, parPage } = req.query;
+  //   try {
+  //     let skipPage = "";
+  //     if (parPage && page) {
+  //       skipPage = parseInt(parPage) * (parseInt(page) - 1);
+  //     }
+  //     if (searchValue && page && parPage) {
+  //       const categorys = await categoryModel
+  //         .find({
+  //           $text: { $search: searchValue },
+  //         })
+  //         .skip(skipPage)
+  //         .limit(parPage)
+  //         .sort({ createdAt: -1 });
+  //       const totalCategory = await categoryModel
+  //         .find({
+  //           $text: { $search: searchValue },
+  //         })
+  //         .countDocuments();
+  //       responseReturn(res, 200, { totalCategory, categorys });
+  //     } else if (searchValue === "" && page && parPage) {
+  //       const categorys = await categoryModel
+  //         .find({})
+  //         .skip(skipPage)
+  //         .limit(parPage)
+  //         .sort({ createdAt: -1 });
+  //       const totalCategory = await categoryModel.find({}).countDocuments();
+  //       responseReturn(res, 200, { totalCategory, categorys });
+  //     } else {
+  //       const categorys = await categoryModel.find({}).sort({ createdAt: -1 });
+  //       const totalCategory = await categoryModel.find({}).countDocuments();
+  //       responseReturn(res, 200, { totalCategory, categorys });
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+
   get_category = async (req, res) => {
     // console.log(req.query);
     const { page, searchValue, parPage } = req.query;
@@ -79,12 +119,10 @@ class categoryController {
 
         const totalCategory = await categoryModel.find({}).countDocuments();
          responseReturn(res, 200, { totalCategory, categorys });
-          
+
       }
        else {
-        const categorys = await categoryModel
-          .find({})
-          .sort({ createAt: -1 });
+        const categorys = await categoryModel.find({}).sort({ createAt: -1 });
 
         const totalCategory = await categoryModel.find({}).countDocuments();
         responseReturn(res, 200, { totalCategory, categorys });

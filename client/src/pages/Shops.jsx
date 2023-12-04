@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Pagination from "../components/Pagination";
@@ -10,48 +10,81 @@ import { AiFillStar } from "react-icons/ai";
 import { CiStar } from "react-icons/ci";
 import { BsFillGridFill } from "react-icons/bs";
 import { FaThList } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  price_range_product,
+  query_products,
+} from "../store/Reducers/homeReducer";
 import Products from "../components/products/Products";
-import product1 from "../assets/products/1.webp";
-import product2 from "../assets/products/2.webp";
-import product3 from "../assets/products/3.webp";
-import product4 from "../assets/products/4.webp";
-import product5 from "../assets/products/5.webp";
-import product6 from "../assets/products/6.webp";
-import product7 from "../assets/products/7.webp";
-
 
 const Shops = () => {
+  const {
+    products,
+    totalProduct,
+    latest_product,
+    categorys,
+    priceRange,
+    parPage,
+  } = useSelector((state) => state.home);
+  const dispatch = useDispatch();
+
   const [pageNumber, setPageNumber] = useState(1);
-  const [parPage, setParPage] = useState(3)
+  // const [parPage, setParPage] = useState(3)
   const [state, setState] = useState({
-    values: [50, 2000],
+    values: [priceRange?.low, priceRange?.high],
   });
   const [rating, setRatingQ] = useState("");
   const [sortPrice, setSortPrice] = useState("");
   const [styles, setStyles] = useState("grid");
   const [filter, setFilter] = useState(true);
   const [category, setCategory] = useState("");
-  const categorys = ["Mobile", "T-shart", "Tablet", "Umrella"];
-  const totalProduct = 70;
-  const products = [
-    product1,
-    product2,
-    product3,
-    product4,
-    product5,
-    product6,
-    product7,
-    product4,
-    product5,
-    product6,
-    product7,
-  ];
 
+  useEffect(() => {
+    dispatch(price_range_product());
+  }, [dispatch]);
+  useEffect(() => {
+    setState({
+      values: [priceRange.low, priceRange.high],
+    });
+  }, [priceRange]);
+  const queryCategoey = (e, value) => {
+    if (e.target.checked) {
+      setCategory(value);
+    } else {
+      setCategory("");
+    }
+  };
+  useEffect(() => {
+    dispatch(
+      query_products({
+        low: state.values[0],
+        high: state.values[1],
+        category,
+        rating,
+        sortPrice,
+        pageNumber,
+      })
+    );
+  }, [state.values, category, rating, pageNumber, sortPrice, dispatch]);
+
+  const resetRating = () => {
+    setRatingQ("");
+    dispatch(
+      query_products({
+        low: state.values[0],
+        high: state.values[1],
+        category,
+        rating: "",
+        sortPrice,
+        pageNumber,
+      })
+    );
+  };
 
   return (
     <div>
       <Header />
-      <section className='bg-[url("http://localhost:5173/shop.gif")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
+      <section className='bg-[url("http://localhost:5174/shop.gif")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
         <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
           <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">
@@ -89,22 +122,22 @@ const Shops = () => {
                 Category
               </h2>
               <div className="py-2">
-                {categorys.map((c, i) => (
+                {categorys.map((c) => (
                   <div
                     className="flex justify-start items-center gap-2 py-1"
-                    key={i}
+                    key={c._id}
                   >
                     <input
-                      checked={category === c ? true : false}
-                      //   onChange={(e) => queryCategoey(e, c.name)}
+                      checked={category === c.name ? true : false}
+                      onChange={(e) => queryCategoey(e, c.name)}
                       type="checkbox"
                       id={c.name}
                     />
                     <label
                       className="text-slate-600 block cursor-pointer"
-                      htmlFor={c}
+                      htmlFor={c.name}
                     >
-                      {c}
+                      {c.name}
                     </label>
                   </div>
                 ))}
@@ -115,8 +148,8 @@ const Shops = () => {
                 </h2>
                 <Range
                   step={5}
-                  min={1}
-                  max={2000}
+                  min={priceRange.low}
+                  max={priceRange.high}
                   values={state.values}
                   onChange={(values) => setState({ values })}
                   renderTrack={({ props, children }) => (
@@ -247,7 +280,7 @@ const Shops = () => {
                     </span>
                   </div>
                   <div
-                    // onClick={resetRating}
+                    onClick={resetRating}
                     className="text-orange-500 flex justify-start items-start gap-2 text-xl cursor-pointer"
                   >
                     <span>
@@ -269,15 +302,14 @@ const Shops = () => {
                 </div>
               </div>
               <div className="py-5 flex flex-col gap-4 md:hidden">
-                <Products title="Latest Products" />
+                <Products title="Latest Products" products={latest_product} />
               </div>
             </div>
             <div className="w-9/12 md-lg:w-8/12 md:w-full">
               <div className="pl-8 md:pl-0">
                 <div className="py-4 bg-white mb-10 px-3 rounded-md flex justify-between items-start border">
                   <h2 className="text-lg font-medium text-slate-600">
-                    {/* {totalProduct} Products */}
-                    80 Products
+                    {totalProduct} Products
                   </h2>
                   <div className="flex justify-center items-center gap-3">
                     <select

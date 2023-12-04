@@ -28,7 +28,7 @@ const Banner = () => {
     },
   };
   const img = [img1, img2, img3, img4, img5, img6, img7];
-  console.log(img);
+  // console.log(img);
   return (
     <div className="w-full md-lg:mt-6">
       <div className="w-[85%] lg:w-[90%] mx-auto">

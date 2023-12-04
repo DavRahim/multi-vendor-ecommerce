@@ -2,18 +2,9 @@ import Carousel from "react-multi-carousel";
 import { FiChevronRight, FiChevronLeft } from "react-icons/fi";
 import "react-multi-carousel/lib/styles.css";
 import { Link } from "react-router-dom";
-import product1 from "../../assets/products/1.webp";
-import product2 from "../../assets/products/2.webp";
-import product3 from "../../assets/products/3.webp";
 
-
-const Products = ({ title, } ) => {
-     const products = [
-       product1,
-       product2,
-       product3,
-      
-     ];
+const Products = ({ title, products }) => {
+ 
   const responsive = {
     superLargeDesktop: {
       breakpoint: { max: 4000, min: 3000 },
@@ -68,21 +59,31 @@ const Products = ({ title, } ) => {
         renderButtonGroupOutside={true}
         customButtonGroup={<ButtonGroup />}
       >
-        {products.map((p, i) => {
-          return (
-            <div key={i} className="flex flex-col justify-start gap-2">
-              {products.map((pl, j) => (
-                <Link key={j} className="flex justify-start items-start" to="#">
-                  <img className="w-[110px] h-[110px]" src={pl} alt="images" />
-                  <div className="px-3 flex justify-start items-start gap-1 flex-col text-slate-600">
-                    <h2>{"Mr.Noodles Magic Masala 35gm X 28pcs (Bucket)"}</h2>
-                    <span className="text-lg font-bold">$ 90</span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          );
-        })}
+        { products &&
+          products?.length > 0 &&
+          products?.map((p, i) => {
+            return (
+              <div key={i} className="flex flex-col justify-start gap-2">
+                {p.map((pl, j) => (
+                  <Link
+                    key={j}
+                    className="flex justify-start items-start"
+                    to="#"
+                  >
+                    <img
+                      className="w-[110px] h-[110px]"
+                      src={pl?.images[0]}
+                      alt="images"
+                    />
+                    <div className="px-3 flex justify-start items-start gap-1 flex-col text-slate-600">
+                      <h2>{pl.name}</h2>
+                      <span className="text-lg font-bold">$ {pl?.price}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            );
+          })}
       </Carousel>
     </div>
   );

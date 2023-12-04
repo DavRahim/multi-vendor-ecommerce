@@ -10,7 +10,6 @@ const sellerCustomerSchema = new Schema(
       type: Array,
       default: [],
     },
-    
   },
   { timestamps: true }
 );

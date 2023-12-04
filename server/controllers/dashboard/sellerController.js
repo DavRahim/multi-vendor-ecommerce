@@ -50,6 +50,89 @@ class sellerController {
       responseReturn(res, 500, { error: error.message });
     }
   };
+
+  get_active_sellers = async (req, res) => {
+    let { page, searchValue, parPage } = req.query;
+    page = parseInt(page);
+    parPage = parseInt(parPage);
+
+    const skipPage = parPage * (page - 1);
+
+    try {
+      if (searchValue) {
+        const sellers = await sellerModal
+          .find({
+            $text: { $search: searchValue },
+            status: "active",
+          })
+          .skip(skipPage)
+          .limit(parPage)
+          .sort({ createdAt: -1 });
+
+        const totalSeller = await sellerModal
+          .find({
+            $text: { $search: searchValue },
+            status: "active",
+          })
+          .countDocuments();
+
+        responseReturn(res, 200, { totalSeller, sellers });
+      } else {
+        const sellers = await sellerModal
+          .find({ status: "active" })
+          .skip(skipPage)
+          .limit(parPage)
+          .sort({ createdAt: -1 });
+        const totalSeller = await sellerModal
+          .find({ status: "active" })
+          .countDocuments();
+        responseReturn(res, 200, { totalSeller, sellers });
+      }
+    } catch (error) {
+      console.log("active seller get " + error.message);
+    }
+  };
+  get_deactive_sellers = async (req, res) => {
+    let { page, searchValue, parPage } = req.query;
+    page = parseInt(page);
+    parPage = parseInt(parPage);
+
+    const skipPage = parPage * (page - 1);
+
+    try {
+      if (searchValue) {
+        const sellers = await sellerModal
+          .find({
+            $text: { $search: searchValue },
+            status: "deactive",
+          })
+          .skip(skipPage)
+          .limit(parPage)
+          .sort({ createdAt: -1 });
+
+        const totalSeller = await sellerModal
+          .find({
+            $text: { $search: searchValue },
+            status: "deactive",
+          })
+          .countDocuments();
+
+        responseReturn(res, 200, { totalSeller, sellers });
+      } else {
+        const sellers = await sellerModal
+          .find({ status: "deactive" })
+          .skip(skipPage)
+          .limit(parPage)
+          .sort({ createdAt: -1 });
+        const totalSeller = await sellerModal
+          .find({ status: "deactive" })
+          .countDocuments();
+        responseReturn(res, 200, { totalSeller, sellers });
+      }
+    } catch (error) {
+      console.log("active seller get " + error.message);
+    }
+  };
 }
 
 module.exports = new sellerController();

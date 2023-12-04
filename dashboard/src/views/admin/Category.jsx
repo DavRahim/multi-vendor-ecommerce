@@ -112,13 +112,13 @@ const Category = () => {
 
                   {category &&
                     category.length > 0 &&
-                    category.map((c, i) => (
+                    category?.map((c, i) => (
                       <tr key={c._id}>
                         <td
                           scope="row"
                           className="py-1 px-4 font-medium whitespace-nowrap"
                         >
-                          {i+1}
+                          {i + 1 }
                         </td>
                         <td
                           scope="row"
@@ -126,7 +126,7 @@ const Category = () => {
                         >
                           <img
                             className="w-[45px] h-[45px]"
-                            src={c.image}
+                            src={c?.image}
                             alt=""
                           />
                         </td>
@@ -134,7 +134,7 @@ const Category = () => {
                           scope="row"
                           className="py-1 px-4 font-medium whitespace-nowrap"
                         >
-                          <span>{c.name}</span>
+                          <span>{c?.name}</span>
                         </td>
                         <td
                           scope="row"

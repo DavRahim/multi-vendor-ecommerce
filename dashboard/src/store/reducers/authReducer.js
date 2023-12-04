@@ -32,6 +32,26 @@ export const seller_login = createAsyncThunk(
     }
   }
 );
+
+export const logout = createAsyncThunk(
+  "auth/logout",
+  async ({ navigate, role }, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.get("/logout", { withCredentials: true });
+      localStorage.removeItem("accessToken");
+      if (role === "admin") {
+        navigate("/admin/login");
+      } else {
+        navigate("/login");
+      }
+
+      return fulfillWithValue(data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const seller_register = createAsyncThunk(
   "auth/seller_register",
   async (info, { rejectWithValue, fulfillWithValue }) => {
@@ -91,8 +111,6 @@ export const profile_info_add = createAsyncThunk(
     }
   }
 );
-
-
 
 const returnRole = (token) => {
   if (token) {
@@ -198,8 +216,8 @@ export const authReducer = createSlice({
     },
     [profile_info_add.pending]: (state, _) => {
       state.loader = true;
-       state.errorMessage = "";
-       state.successMessage = "";
+      state.errorMessage = "";
+      state.successMessage = "";
     },
     [profile_info_add.fulfilled]: (state, { payload }) => {
       state.loader = false;

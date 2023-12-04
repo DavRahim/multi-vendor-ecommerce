@@ -15,6 +15,10 @@ const AddProduct = () => {
   const { successMessage, errorMessage, loader } = useSelector(
     (state) => state.product
   );
+  const { userInfo } = useSelector(
+    (state) => state.auth
+  );
+  // console.log(userInfo?.shopInfo?.shopName);
 
   useEffect(() => {
     dispatch(
@@ -102,6 +106,8 @@ const AddProduct = () => {
     setAllCategory(category);
   }, [category]);
 
+  // console.log(state);
+
   const add = (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -111,7 +117,7 @@ const AddProduct = () => {
     formData.append("stock", state.stock);
     formData.append("category", categorys);
     formData.append("discount", state.discount);
-    formData.append("shopName", "Rahim sports");
+    formData.append("shopName", userInfo?.shopInfo?.shopName || "No Shop");
     formData.append("brand", state.brand);
 
     for (let i = 0; i < image.length; i++) {
@@ -292,7 +298,7 @@ const AddProduct = () => {
                 imageShow.length > 0 &&
                 imageShow?.map(
                   (img, ind) => (
-                    console.log(img?.url),
+                    // console.log(img?.url),
                     (
                       <div className="h-[180px] relative " key={ind}>
                         <label htmlFor={ind}>

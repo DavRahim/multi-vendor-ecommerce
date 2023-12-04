@@ -2,47 +2,68 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Footer from "../components/Footer";
-import product1 from "../assets/products/1.webp";
-import product2 from "../assets/products/2.webp";
-import product3 from "../assets/products/3.webp";
-import product4 from "../assets/products/4.webp";
-import product5 from "../assets/products/5.webp";
-import product6 from "../assets/products/6.webp";
-import product7 from "../assets/products/7.webp";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import {
+  delete_card_product,
+  get_card_products,
+  messageClear,
+  quantity_dec,
+  quantity_inc,
+} from "../store/Reducers/cardReducer";
 
 const Card = () => {
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const redirect = () =>{
+  const { userInfo } = useSelector((state) => state.auth);
+  const {
+    card_products,
+    successMessage,
+    price,
+    buy_product_item,
+    shipping_fee,
+    outofstock_products,
+  } = useSelector((state) => state.card);
+  const redirect = () => {
     navigate("/shipping", {
       state: {
         products: card_products,
-        price: 10,
-        shipping_fee: 40,
-        items: 780,
-        // price: price,
-        // shipping_fee: shipping_fee,
-        // items: buy_product_item,
+        // price: 10,
+        // shipping_fee: 40,
+        // items: 780,
+        price: price,
+        shipping_fee: shipping_fee,
+        items: buy_product_item,
       },
     });
-  }
+  };
 
+  const inc = (quantity, stock, card_id) => {
+    const temp = quantity + 1;
+    if (temp <= stock) {
+      dispatch(quantity_inc(card_id));
+    }
+  };
 
-  const card_products = [
-    product1,
-    product2,
-    
-  ];
-  const products = [
-    product1,
-    product2,
-    product3,
-    product4,
-    product5,
-    product6,
-    product7,
-  ];
-  const outofstock_products = [product1, product2];
+  const dec = (quantity, card_id) => {
+    const temp = quantity - 1;
+    if (temp !== 0) {
+      dispatch(quantity_dec(card_id));
+    }
+  };
+
+  useEffect(() => {
+    dispatch(get_card_products(userInfo?.id));
+  }, [userInfo, dispatch]);
+  
+  useEffect(() => {
+    if (successMessage) {
+      toast.success(successMessage);
+      dispatch(messageClear());
+      dispatch(get_card_products(userInfo?.id));
+    }
+  }, [successMessage, userInfo, dispatch]);
 
   return (
     <div>
@@ -75,31 +96,31 @@ const Card = () => {
                         Stock Products {card_products.length}
                       </h2>
                     </div>
-                    {card_products.map((p, i) => (
-                      <div key={i} className="flex bg-white p-4 flex-col gap-2">
+                    {card_products.map((p) => (
+                      <div
+                        key={p._id}
+                        className="flex bg-white p-4 flex-col gap-2"
+                      >
                         <div className="flex justify-start items-center">
                           <h2 className="text-md text-slate-600">
-                            {/* {p.shopName} */}
-                            ALi abab
+                            {p.shopName}
                           </h2>
                         </div>
-                        {products.map((pt, i) => (
-                          <div key={i} className="w-full flex flex-wrap">
+                        {p.products.map((pt) => (
+                          <div key={pt._id} className="w-full flex flex-wrap">
                             <div className="flex sm:w-full gap-2 w-7/12">
                               <div className="flex gap-2 justify-start items-center">
                                 <img
                                   className="w-[80px] h-[80px]"
-                                  src={pt}
+                                  src={pt.productInfo.images[0]}
                                   alt="product image"
                                 />
                                 <div className="pr-4 text-slate-600">
                                   <h2 className="text-md">
-                                    {/* {pt.productInfo.name} */}
-                                    Combo Offer of Jeanne Arthes Guipure And
+                                    {pt.productInfo.name}
                                   </h2>
                                   <span className="text-sm">
-                                    {/* Brand : {pt.productInfo.brand} */}
-                                    Brand : Arthes Guipure
+                                    Brand : {pt.productInfo.brand}
                                   </span>
                                 </div>
                               </div>
@@ -107,47 +128,45 @@ const Card = () => {
                             <div className="flex justify-between w-5/12 sm:w-full sm:mt-3">
                               <div className="pl-4 sm:pl-0">
                                 <h2 className="text-lg text-orange-500">
-                                  $ 50
-                                  {/* {pt.productInfo.price -
+                                  ${" "}
+                                  {pt.productInfo.price -
                                     Math.floor(
                                       (pt.productInfo.price *
                                         pt.productInfo.discount) /
                                         100
-                                    )}{" "} */}
+                                    )}{" "}
                                 </h2>
                                 <p className="line-through">
-                                  {/* {pt.productInfo.price} */}
-                                  70
+                                  $ {pt.productInfo.price}
                                 </p>
-                                {/* <p>-{pt.productInfo.discount}%</p> */}
-                                <p>-60 %</p>
+                                <p>-{pt.productInfo.discount} %</p>
                               </div>
                               <div className="flex gap-2 flex-col">
                                 <div className="flex bg-slate-200 h-[30px] justify-center items-center text-xl">
                                   <div
-                                    // onClick={() => dec(pt.quantity, pt._id)}
+                                    onClick={() => dec(pt.quantity, pt._id)}
                                     className="px-3 cursor-pointer"
                                   >
                                     -
                                   </div>
-                                  <div className="px-3">7</div>
+                                  <div className="px-3">{pt.quantity}</div>
                                   <div
-                                    // onClick={() =>
-                                    //   inc(
-                                    //     pt.quantity,
-                                    //     pt.productInfo.stock,
-                                    //     pt._id
-                                    //   )
-                                    // }
+                                    onClick={() =>
+                                      inc(
+                                        pt.quantity,
+                                        pt.productInfo.stock,
+                                        pt._id
+                                      )
+                                    }
                                     className="px-3 cursor-pointer"
                                   >
                                     +
                                   </div>
                                 </div>
                                 <button
-                                  //   onClick={() =>
-                                  //     dispatch(delete_card_product(pt._id))
-                                  //   }
+                                  onClick={() =>
+                                    dispatch(delete_card_product(pt._id))
+                                  }
                                   className="px-5 py-[3px] bg-red-500 text-white"
                                 >
                                   Delete
@@ -162,8 +181,7 @@ const Card = () => {
                       <div className="flex flex-col gap-3">
                         <div className="bg-white p-4">
                           <h2 className="text-md text-red-500 font-semibold">
-                            {/* Out of Stock {outofstock_products.length} */}
-                            Out of Stock 70
+                            Out of Stock {outofstock_products.length}
                           </h2>
                         </div>
                         <div className="bg-white p-4">
@@ -173,17 +191,15 @@ const Card = () => {
                                 <div className="flex gap-2 justify-start items-center">
                                   <img
                                     className="w-[80px] h-[80px]"
-                                    src={p}
+                                    src={p.products[0].images[0]}
                                     alt="product image"
                                   />
                                   <div className="pr-4 text-slate-600">
                                     <h2 className="text-md">
-                                      {/* {p.products[0].name} */}
-                                      Awasoime t-shirtr
+                                      {p.products[0].name}
                                     </h2>
                                     <span className="text-sm">
-                                      {/* Brand : {p.products[0].brand} */}
-                                      Brand : Essay
+                                      Brand : {p.products[0].brand}
                                     </span>
                                   </div>
                                 </div>
@@ -191,48 +207,46 @@ const Card = () => {
                               <div className="flex justify-between w-5/12 sm:w-full sm:mt-3">
                                 <div className="pl-4 sm:pl-0">
                                   <h2 className="text-lg text-orange-500">
-                                    $ 80
-                                    {/* {p.products[0].price -
+                                    ${" "}
+                                    {p.products[0].price -
                                       Math.floor(
                                         (p.products[0].price *
                                           p.products[0].discount) /
                                           100
-                                      )}{" "} */}
+                                      )}{" "}
                                   </h2>
                                   <p className="line-through">
-                                    {/* {p.products[0].price} */}
-                                    60
+                                    $ {p.products[0].price}
                                   </p>
-                                  {/* <p>-{p.products[0].discount}%</p> */}
-                                  <p>-70%</p>
+                                  <p>-{p.products[0].discount}%</p>
                                 </div>
                                 <div className="flex gap-2 flex-col">
                                   <div className="flex bg-slate-200 h-[30px] justify-center items-center text-xl">
                                     <div
-                                      //   onClick={() => dec(p.quantity, p._id)}
+                                      onClick={() => dec(p.quantity, p._id)}
                                       className="px-3 cursor-pointer"
                                     >
                                       -
                                     </div>
-                                    {/* <div className="px-3">{p.quantity}</div> */}
-                                    <div className="px-3">7</div>
+                                    <div className="px-3">{p.quantity}</div>
+
                                     <div
-                                      //   onClick={() =>
-                                      //     dec(
-                                      //       p.quantity,
-                                      //       p.products[0].stock,
-                                      //       p._id
-                                      //     )
-                                      //   }
+                                      onClick={() =>
+                                        dec(
+                                          p.quantity,
+                                          p.products[0].stock,
+                                          p._id
+                                        )
+                                      }
                                       className="px-3 cursor-pointer"
                                     >
                                       +
                                     </div>
                                   </div>
                                   <button
-                                    // onClick={() =>
-                                    //   dispatch(delete_card_product(p._id))
-                                    // }
+                                    onClick={() =>
+                                      dispatch(delete_card_product(p._id))
+                                    }
                                     className="px-5 py-[3px] bg-red-500 text-white"
                                   >
                                     Delete
@@ -253,14 +267,13 @@ const Card = () => {
                     <div className="bg-white p-3 text-slate-600 flex flex-col gap-3">
                       <h2 className="text-xl font-bold">Order Summary</h2>
                       <div className="flex justify-between items-center">
-                        {/* <span>{buy_product_item} Item</span> */}
-                        <span>6 Item</span>
-                        <span>$ 90</span>
+                        <span>{buy_product_item} Item</span>
+
+                        <span>$ {price}</span>
                       </div>
                       <div className="flex justify-between items-center">
                         <span>Shipping Fee</span>
-                        {/* <span>${shipping_fee}</span> */}
-                        <span>$ 90</span>
+                        <span>${shipping_fee}</span>
                       </div>
                       <div className="flex gap-2">
                         <input
@@ -273,17 +286,16 @@ const Card = () => {
                         </button>
                       </div>
                       <div className="flex justify-between items-center">
-                        <span>Total ------- </span>
+                        <span>Total -------= </span>
                         <span className="text-lg text-orange-500">
-                          {/* ${price + shipping_fee} */}$ 9
+                          $ {price + shipping_fee}
                         </span>
                       </div>
                       <button
                         onClick={redirect}
                         className="px-5 py-[6px] rounded-sm hover:shadow-orange-500/20 hover:shadow-lg bg-orange-500 text-sm text-white uppercase"
                       >
-                        {/* Proceed to checkout {buy_product_item} */}
-                        Proceed to checkout 9
+                        Proceed to checkout {buy_product_item}
                       </button>
                     </div>
                   )}

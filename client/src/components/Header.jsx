@@ -22,9 +22,11 @@ import { useSelector } from "react-redux";
 
 
 const Header = () => {
+  const { userInfo } = useSelector(
+    (state) => state.auth
+  );
 
   const { categorys } = useSelector((state) => state.home);
-  const userInfo = true;
   const [showShidebar, setShowShidebar] = useState(true);
   const [categoryShow, setCategoryShow] = useState(true);
   const [searchValue, setSearchValue] = useState("");
@@ -34,8 +36,9 @@ const Header = () => {
    const search = () => {
      navigate(`/products/search?category=${category}&&value=${searchValue}`);
    };
-  const wishlist_count  = 4
-  const card_product_count= 8
+   const { card_product_count, wishlist_count } = useSelector(
+     (state) => state.card
+   );
   const redirect_card_page = () => {
     if (userInfo) {
       navigate(`/card`);
@@ -92,7 +95,7 @@ const Header = () => {
                     <span>
                       <FaUser />
                     </span>
-                    <span>Abdur Rahim</span>
+                    <span>{userInfo?.name}</span>
                   </Link>
                 ) : (
                   <Link
@@ -133,7 +136,7 @@ const Header = () => {
                 <ul className="flex justify-start items-start gap-8 text-sm font-bold uppercase md-lg:hidden">
                   <li>
                     <Link
-                    to={'/'}
+                      to={"/"}
                       className={`p-2 block ${
                         pathname === "/" ? "text-[#7fad39]" : "text-slate-600"
                       }`}
@@ -208,7 +211,7 @@ const Header = () => {
                       onClick={redirect_card_page}
                       className="relative flex justify-center items-center cursor-pointer w-[35px] h-[35px] rounded-full bg-[#e2e2e2]"
                     >
-                      <Link to={'/card'} className="text-xl text-orange-500">
+                      <Link to={"/card"} className="text-xl text-orange-500">
                         <AiFillShopping />
                       </Link>
                       {card_product_count !== 0 && (
@@ -391,13 +394,13 @@ const Header = () => {
                         <img
                           src={c.image}
                           className="w-[30px] h-[30px] rounded-full overflow-hidden"
-                          alt={c.image}
+                          alt={c?.image}
                         />
                         <Link
-                          to={`/products?category=${c.name}`}
+                          to={`/products?category=${c?.name}`}
                           className="text-sm block"
                         >
-                          {c.name}
+                          {c?.name}
                         </Link>
                       </li>
                     );
@@ -418,8 +421,8 @@ const Header = () => {
                       id=""
                     >
                       <option value="">Select category</option>
-                      {categorys.map((c, i) => (
-                        <option key={i} value={c?.name}>
+                      {categorys.map((c) => (
+                        <option key={c?._id} value={c?.name}>
                           {c?.name}
                         </option>
                       ))}
