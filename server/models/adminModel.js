@@ -16,7 +16,6 @@ const adminSchema = new Schema({
         type: String,
         required: true,
         select: false
-
     },
     image: {
         type: String,

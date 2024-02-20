@@ -1,0 +1,30 @@
+@tailwind base;
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primary);
+  border-radius: 7px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 7px;
+  border: 2px solid var(--primary);
+}
+
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #E3E6F3;
+  --secondary: #088178;
+}
