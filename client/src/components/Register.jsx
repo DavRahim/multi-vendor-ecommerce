@@ -33,7 +33,6 @@ const Register = () => {
   const register = (e) => {
     e.preventDefault();
     dispatch(customer_register(state));
-    // console.log(state);
   };
   useEffect(() => {
     if (successMessage) {
