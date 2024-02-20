@@ -77,7 +77,7 @@ class authControllers {
       // console.log(seller, "seller");
       if (seller) {
         const match = await bcrypt.compare(password, seller.password);
-        console.log(match);
+        // console.log(match);
         if (match) {
           const token = await createToken({
             id: seller.id,

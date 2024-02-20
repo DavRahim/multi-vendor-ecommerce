@@ -22,7 +22,7 @@ const Sellers = () => {
       };
       dispatch(get_active_sellers(obj));
     }, [searchValue, currentPage, parPage]);
-    console.log(sellers);
+    // console.log(sellers);
 
   return (
     <div className="px-2 lg:px-7 pt-5 ">

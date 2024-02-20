@@ -25,7 +25,7 @@ export const send_message = createAsyncThunk(
         "/chat/customer/send-message-to-seller",
         info
       );
-      console.log(data);
+      // console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);

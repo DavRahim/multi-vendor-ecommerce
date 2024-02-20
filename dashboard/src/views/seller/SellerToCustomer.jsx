@@ -30,7 +30,7 @@ const SellerToCustomer = () => {
   const [text, setText] = useState("");
   const { customerId } = useParams();
 
-  console.log(userInfo);
+  // console.log(userInfo);
 
   useEffect(() => {
     dispatch(get_customers(userInfo._id));

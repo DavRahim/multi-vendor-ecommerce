@@ -6,6 +6,8 @@ import  stripe from '../assets/payment/stripe.png'
 import bkash from "../assets/payment/bkash.png";
 import roket from "../assets/payment/roket.png";
 import nogot from "../assets/payment/nogot.png";
+import Stripe from "../components/Stripe";
+import { Helmet } from "react-helmet-async";
 const Payment = () => {
   const {
     state: { price, items, orderId },
@@ -13,6 +15,9 @@ const Payment = () => {
   const [paymentMethod, setPaymentMethod] = useState("stripe");
   return (
     <div>
+      <Helmet>
+        <title>Payment | R_S ecommerce </title>
+      </Helmet>
       <Header />
       <section className="bg-[#eeeeee]">
         <div className="w-[85%] lg:w-[90%] md:w-[90%] sm:w-[90%] mx-auto py-16 mt-4">
@@ -27,10 +32,7 @@ const Payment = () => {
                     }`}
                   >
                     <div className="flex flex-col gap-[3px] justify-center items-center">
-                      <img
-                        src={stripe}
-                        alt="stripe"
-                      />
+                      <img src={stripe} alt="stripe" />
                       <span className="text-slate-600">Stripe</span>
                     </div>
                   </div>
@@ -41,10 +43,7 @@ const Payment = () => {
                     }`}
                   >
                     <div className="flex flex-col gap-[3px] justify-center items-center">
-                      <img
-                        src={bkash}
-                        alt="bkash"
-                      />
+                      <img src={bkash} alt="bkash" />
                       <span className="text-slate-600">Bkash</span>
                     </div>
                   </div>
@@ -55,10 +54,7 @@ const Payment = () => {
                     }`}
                   >
                     <div className="flex flex-col gap-[3px] justify-center items-center">
-                      <img
-                        src={nogot}
-                        alt="nogot"
-                      />
+                      <img src={nogot} alt="nogot" />
                       <span className="text-slate-600">Nogot</span>
                     </div>
                   </div>
@@ -69,10 +65,7 @@ const Payment = () => {
                     }`}
                   >
                     <div className="flex flex-col gap-[3px] justify-center items-center">
-                      <img
-                        src={roket}
-                        alt="roket"
-                      />
+                      <img src={roket} alt="roket" />
                       <span className="text-slate-600">Roket</span>
                     </div>
                   </div>
@@ -80,7 +73,7 @@ const Payment = () => {
                 {paymentMethod === "stripe" && (
                   <div>
                     <h1>stripe</h1>
-                    {/* <Stripe orderId={orderId} price={price} /> */}
+                    <Stripe orderId={orderId} price={price} />
                   </div>
                 )}
                 {paymentMethod === "bkash" && (

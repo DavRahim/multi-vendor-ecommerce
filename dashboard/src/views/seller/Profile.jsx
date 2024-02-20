@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { profile_image_upload, profile_info_add } from "../../store/reducers/authReducer";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { create_stripe_connect_account } from "../../store/reducers/SellerReducer";
 const Profile = () => {
   const { userInfo, loader, successMessage } = useSelector(
     (state) => state.auth
@@ -115,10 +116,15 @@ const Profile = () => {
                   <p>
                     {userInfo.payment === "active" ? (
                       <span className="bg-green-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded">
-                        Pending
+                        {userInfo.payment}
                       </span>
                     ) : (
-                      <span className="bg-blue-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded">
+                      <span
+                        onClick={() =>
+                          dispatch(create_stripe_connect_account())
+                        }
+                        className="bg-blue-500 text-white text-xs cursor-pointer font-normal ml-2 px-2 py-0.5 rounded"
+                      >
                         click Active
                       </span>
                     )}
@@ -209,7 +215,7 @@ const Profile = () => {
                     <span>{userInfo.shopInfo?.district}</span>
                   </div>
                   <div className="flex gap-2">
-                    <span>Sub District :  </span>
+                    <span>Sub District : </span>
                     <span>{userInfo.shopInfo?.sub_district}</span>
                   </div>
                 </div>
@@ -267,3 +273,4 @@ const Profile = () => {
 };
 
 export default Profile;
+

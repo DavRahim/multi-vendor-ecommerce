@@ -237,7 +237,7 @@ const Reviews = ({ product }) => {
                 rows="5"
               ></textarea>
               <div className="mt-2">
-                <button className="py-1 px-5 bg-indigo-500 text-white rounded-sm">
+                <button className="py-1 px-5 bg-[#088178] text-white rounded-sm">
                   Submit
                 </button>
               </div>
@@ -246,7 +246,7 @@ const Reviews = ({ product }) => {
         ) : (
           <div>
             <Link
-              className="py-1 px-5 bg-indigo-500 text-white rounded-sm"
+              className="py-[12px] px-5 bg-[#088178] text-white rounded-md"
               to="/login"
             >
               Login

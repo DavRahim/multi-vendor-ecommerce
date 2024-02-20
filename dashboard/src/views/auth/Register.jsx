@@ -31,7 +31,7 @@ const Register = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(seller_register(state))
-    console.log(state);
+    // console.log(state);
   }
 
   useEffect(() => {

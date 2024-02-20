@@ -40,10 +40,12 @@ class customerAuthController {
 
   customer_login = async (req, res) => {
     const { email, password } = req.body;
-  
+
     try {
-      const customer = await customerModel.findOne({ email }).select("+password");
-        console.log(customer);
+      const customer = await customerModel
+        .findOne({ email })
+        .select("+password");
+      console.log(customer);
       if (customer) {
         const match = await bcrypt.compare(password, customer.password);
         if (match) {
@@ -66,6 +68,13 @@ class customerAuthController {
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  customer_logout = async (req, res) => {
+    res.cookie("customerToken", "", {
+      expires: new Date(Date.now()),
+    });
+    responseReturn(res, 200, { message: "Logout success" });
   };
 }
 

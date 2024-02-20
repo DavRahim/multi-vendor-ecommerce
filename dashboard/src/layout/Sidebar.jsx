@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'
-import logo from '../assets/logo.png'
+import logo from '../assets/logo2.png'
 import { useEffect, useState } from "react";
 import { getNavs } from "../navigation";
 import { BiLogInCircle } from "react-icons/bi";
@@ -31,7 +31,7 @@ const Sidebar = ({ showSidebar, setShowSidebar }) => {
       >
         <div className="h-[70px] flex justify-center items-center ">
           <Link to={"/"} className="w-[180px] h-[50px]">
-            <img className="w-full h-full" src={logo} alt="logo" />
+            <img className="w-full h-full object-contain" src={logo} alt="logo" />
           </Link>
         </div>
         <div className="px-[16px] ">

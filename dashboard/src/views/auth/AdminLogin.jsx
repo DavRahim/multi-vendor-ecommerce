@@ -26,7 +26,7 @@ const AdminLogin = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(admin_login(state))
-    console.log(state);
+    // console.log(state);
   };
 
   const overRightStyle = {

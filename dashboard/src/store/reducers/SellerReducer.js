@@ -115,7 +115,6 @@ export const active_stripe_connect_account = createAsyncThunk(
     }
   }
 );
-
 export const sellerReducer = createSlice({
   name: "seller",
   initialState: {

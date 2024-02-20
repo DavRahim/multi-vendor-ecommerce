@@ -14,7 +14,9 @@ const Wishlist = () => {
        useEffect(() => {
          dispatch(get_wishlist_products(userInfo.id));
        }, [dispatch]);
+
         useEffect(() => {
+               
           if (successMessage) {
             toast.success(successMessage);
             dispatch(messageClear());
@@ -42,17 +44,17 @@ const Wishlist = () => {
               <ul className="flex transition-all duration-700 -bottom-10 justify-center items-center gap-2 absolute w-full group-hover:bottom-3">
                 <li
                   onClick={() => dispatch(remove_wishlist(p._id))}
-                  className={`w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#7fad39] hover:text-white hover:rotate-[720deg] transition-all`}
+                  className="w-[38px] h-[38px] border border-solid border-[#cce7d0]  cursor-pointer flex justify-center items-center rounded-full bg-[#e8f6ea]   text-[#088178] hover:text-white hover:bg-[#088178] hover:rotate-[720deg] transition-all"
                 >
                   <AiFillHeart />
                 </li>
                 <Link
                   to={`/product/details/${p.slug}`}
-                  className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#7fad39] hover:text-white hover:rotate-[720deg] transition-all"
+                  className="w-[38px] h-[38px] border border-solid border-[#cce7d0]  cursor-pointer flex justify-center items-center rounded-full bg-[#e8f6ea]   text-[#088178] hover:text-white hover:bg-[#088178] hover:rotate-[720deg] transition-all"
                 >
                   <FaEye />
                 </Link>
-                <li className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#7fad39] hover:text-white hover:rotate-[720deg] transition-all">
+                <li className="w-[38px] h-[38px] border border-solid border-[#cce7d0]  cursor-pointer flex justify-center items-center rounded-full bg-[#e8f6ea]   text-[#088178] hover:text-white hover:bg-[#088178] hover:rotate-[720deg] transition-all">
                   <AiOutlineShoppingCart />
                 </li>
               </ul>

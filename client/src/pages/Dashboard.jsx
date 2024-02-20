@@ -1,6 +1,6 @@
 import { FaList } from "react-icons/fa";
 import Header from "../components/Header";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { BsChat, BsHeart } from "react-icons/bs";
 import Footer from "../components/Footer";
 import { useState } from "react";
@@ -8,20 +8,40 @@ import { RxDashboard } from "react-icons/rx";
 import { RiProductHuntLine } from "react-icons/ri";
 import { TfiLock } from "react-icons/tfi";
 import { BiLogInCircle } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { user_reset } from "../store/Reducers/authReducer";
+import { reset_count } from "../store/Reducers/cardReducer";
+import api from "../api/api";
+import { Helmet } from "react-helmet-async";
 
 const Dashboard = () => {
-  const [filterShow, setFilterShow] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [filterShow, setFilterShow] = useState(false);
 
-  const logout = async () => {};
+ const logout = async () => {
+   try {
+     const { data } = await api.get("/customer/logout");
+     localStorage.removeItem("customerToken");
+     dispatch(user_reset());
+     dispatch(reset_count());
+     navigate("/login");
+   } catch (error) {
+     console.log(error.response.data);
+   }
+ };
   return (
     <div>
+      <Helmet>
+        <title>Dashboard | R_S ecommerce </title>
+      </Helmet>
       <Header />
       <div className="bg-slate-200 mt-5">
         <div className="w-[90%] mx-auto pt-5 md-lg:block hidden">
           <div>
             <button
               onClick={() => setFilterShow(!filterShow)}
-              className="text-center py-3 px-3 bg-indigo-500 text-white"
+              className="text-center py-3 px-3 bg-[#088178] text-white"
             >
               <FaList />
             </button>

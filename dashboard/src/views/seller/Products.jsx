@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Search from "../components/Search";
 import Pagination from "../Pagination";
-import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import { FaEdit, FaEye, FaLocationArrow, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { get_Products } from "../../store/reducers/productReducer";
@@ -138,6 +138,12 @@ const Products = () => {
                         <button className="p-[6px] bg-red-500 rounded hover:shadow-lg hover:shadow-red-500/50">
                           <FaTrash />
                         </button>
+                        <Link
+                          to={`/seller/dashboard/add-banners/${p?._id}`}
+                          className="p-[6px] bg-green-500 rounded hover:shadow-lg hover:shadow-red-500/50"
+                        >
+                          <FaLocationArrow />
+                        </Link>
                       </div>
                     </td>
                   </tr>

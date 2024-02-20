@@ -15,7 +15,7 @@ const [parPage, setParPage] = useState(5);
 const [show, setShow] = useState("");
 
 
-console.log(myOrders, totalOrder);
+// console.log(myOrders, totalOrder);
 
 useEffect(() => {
   dispatch(

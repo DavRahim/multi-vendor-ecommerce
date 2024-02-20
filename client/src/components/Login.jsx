@@ -4,12 +4,13 @@ import Header from "./Header";
 import FadeLoader from "react-spinners/FadeLoader";
 import { FaFacebookF } from "react-icons/fa";
 import { AiOutlineGoogle } from "react-icons/ai";
-import login1 from "../assets/login.jpg";
+import login1 from "../assets/login.svg";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { customer_login } from "../store/Reducers/authReducer";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Login = () => {
   const { loader, successMessage, errorMessage, userInfo } = useSelector(
@@ -48,6 +49,9 @@ const Login = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Login | R_S ecommerce </title>
+      </Helmet>
       <Header />
       {loader && (
         <div className="w-screen h-screen flex justify-center items-center fixed left-0 top-0 bg-[#38303033] z-[999]">
@@ -87,7 +91,7 @@ const Login = () => {
                       placeholder="password"
                     />
                   </div>
-                  <button className="px-8 w-full py-2 bg-purple-500 shadow-lg hover:shadow-indigo-500/30 text-white rounded-md">
+                  <button className="px-8 w-full py-2 bg-[#088178] shadow-lg hover:shadow-indigo-500/30 text-white rounded-md">
                     Login
                   </button>
                 </form>
@@ -115,6 +119,18 @@ const Login = () => {
                   <Link className="text-blue-500" to="/register">
                     Register
                   </Link>
+                </p>
+              </div>
+              <div className="text-center text-slate-600 pt-1">
+                <p>
+                  <a
+                    href="http://localhost:5173/login"
+                    className="text-blue-500"
+                    to="/login"
+                  >
+                    Login{" "}
+                  </a>
+                  seller account
                 </p>
               </div>
             </div>

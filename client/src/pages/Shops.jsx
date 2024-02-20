@@ -16,6 +16,7 @@ import {
   query_products,
 } from "../store/Reducers/homeReducer";
 import Products from "../components/products/Products";
+import { Helmet } from "react-helmet-async";
 
 const Shops = () => {
   const {
@@ -83,6 +84,9 @@ const Shops = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Shop | R_S ecommerce </title>
+      </Helmet>
       <Header />
       <section className='bg-[url("http://localhost:5174/shop.gif")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
         <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">

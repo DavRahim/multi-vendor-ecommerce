@@ -17,7 +17,7 @@ const Category = () => {
   const { loader, successMessage, errorMessage, category } = useSelector(
     (state) => state.category
   );
-  console.log(category);
+  // console.log(category)
 
   const [parPage, setParPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);

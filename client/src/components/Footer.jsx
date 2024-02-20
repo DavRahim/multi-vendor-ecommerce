@@ -1,29 +1,26 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import { FaFacebookF, FaLinkedin } from "react-icons/fa";
 import { AiFillGithub, AiOutlineTwitter } from "react-icons/ai";
 // import { useSelector } from "react-redux";
 import { AiFillShopping, AiFillHeart } from "react-icons/ai";
-import logo from '../assets/logo.png'
+import logo from "../assets/logo2.png";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
-//   const { card_product_count, wishlist_count } = useSelector(
-//     (state) => state.card
-//   );
-const card_product_count= 7
-const userInfo= true 
-const wishlist_count= 6
   const navigate = useNavigate();
-//   const { userInfo } = useSelector((state) => state.auth);
+  const { userInfo } = useSelector((state) => state.auth);
+  const { card_product_count, wishlist_count } = useSelector(
+    (state) => state.card
+  );
 
   return (
-    <footer className="bg-[#F3F6Fa]">
+    <footer className="bg-[#FFFF]">
       <div className="w-[85%] flex flex-wrap mx-auto border-b py-16 md-lg:pb-10 sm:pb-6">
         <div className="w-3/12 lg:w-4/12 sm:w-full">
           <div className="flex flex-col gap-3">
             <img className="w-[190px] h-[70x]" src={logo} alt="logo" />
             <ul className="flex flex-col gap-2 text-slate-600">
-              <li>Address : Rangpur , Kuigram</li>
+              <li>Address : Jamalpur , Jamalpur sadar</li>
               <li>Phone : 5873458345</li>
               <li>Email : rahim@gmail.com</li>
             </ul>
@@ -32,7 +29,7 @@ const wishlist_count= 6
         <div className="w-5/12 lg:w-8/12 sm:w-full">
           <div className="flex justify-center sm:justify-start sm:mt-6 w-full">
             <div>
-              <h2 className="font-bold text-lg mb-2">Useful links</h2>
+              <h2 className="font-bold text-lg mb-2">About</h2>
               <div className="flex justify-between gap-[80px] lg:gap-[40px]">
                 <ul className="flex flex-col gap-2 text-slate-600 text-sm">
                   <li>
@@ -53,19 +50,20 @@ const wishlist_count= 6
                 </ul>
                 <ul className="flex flex-col gap-2 text-slate-600 text-sm">
                   <li>
-                    <Link>About Us</Link>
+                    <Link>Sign In</Link>
                   </li>
                   <li>
-                    <Link>About our Shop</Link>
+                    <Link>view Cart</Link>
                   </li>
                   <li>
-                    <Link>Delivery Information</Link>
+                    <Link>My wishlist</Link>
                   </li>
                   <li>
-                    <Link>Privacy Policy</Link>
+                    <Link>Track My Order</Link>
                   </li>
+
                   <li>
-                    <Link>Blogs</Link>
+                    <Link>Help</Link>
                   </li>
                 </ul>
               </div>
@@ -84,14 +82,14 @@ const wishlist_count= 6
                 className="h-full bg-transparent w-full px-3 outline-0"
                 type="text"
               />
-              <button className="h-full absolute right-0 bg-indigo-500 text-white uppercase px-4 font-bold text-sm">
+              <button className="h-full absolute right-0 bg-[#088178] text-white uppercase px-4 font-bold text-sm">
                 Subscribe
               </button>
             </div>
             <ul className="flex justify-start items-center gap-3">
               <li>
                 <a
-                  className="w-[38px] h-[38px] hover:bg-[#7fad39] hover:text-white flex justify-center items-center bg-white rounded-full"
+                  className="w-[38px] h-[38px] cursor-pointer  justify-center items-center border border-solid border-[#cce7d0]  rounded-full flex bg-[#e8f6ea]   text-[#088178] hover:text-white hover:bg-[#088178] hover:rotate-[720deg] transition-all"
                   href="#"
                 >
                   <FaFacebookF />
@@ -99,7 +97,7 @@ const wishlist_count= 6
               </li>
               <li>
                 <a
-                  className="w-[38px] h-[38px] hover:bg-[#7fad39] hover:text-white flex justify-center items-center bg-white rounded-full"
+                  className="w-[38px] h-[38px] cursor-pointer  justify-center items-center border border-solid border-[#cce7d0]  rounded-full flex bg-[#e8f6ea]   text-[#088178] hover:text-white hover:bg-[#088178] hover:rotate-[720deg] transition-all"
                   href="#"
                 >
                   <AiOutlineTwitter />
@@ -107,7 +105,7 @@ const wishlist_count= 6
               </li>
               <li>
                 <a
-                  className="w-[38px] h-[38px] hover:bg-[#7fad39] hover:text-white flex justify-center items-center bg-white rounded-full"
+                  className="w-[38px] h-[38px] cursor-pointer  justify-center items-center border border-solid border-[#cce7d0]  rounded-full flex bg-[#e8f6ea]   text-[#088178] hover:text-white hover:bg-[#088178] hover:rotate-[720deg] transition-all"
                   href="#"
                 >
                   <FaLinkedin />
@@ -115,7 +113,7 @@ const wishlist_count= 6
               </li>
               <li>
                 <a
-                  className="w-[38px] h-[38px] hover:bg-[#7fad39] hover:text-white flex justify-center items-center bg-white rounded-full"
+                  className="w-[38px] h-[38px] cursor-pointer  justify-center items-center border border-solid border-[#cce7d0]  rounded-full flex bg-[#e8f6ea]   text-[#088178] hover:text-white hover:bg-[#088178] hover:rotate-[720deg] transition-all"
                   href="#"
                 >
                   <AiFillGithub />
@@ -128,7 +126,7 @@ const wishlist_count= 6
       <div className="w-[85%] flex flex-wrap justify-center items-center text-slate-600 mx-auto py-5 text-center">
         <span>
           Copyright ©2023 All rights reserved | made by{" "}
-          <a className="text-blue-500 underline" href="">
+          <a className="text-[#088178] underline" href="">
             @Abdur Rahim Teach
           </a>
         </span>
@@ -144,7 +142,7 @@ const wishlist_count= 6
               <AiFillShopping />
             </span>
             {card_product_count !== 0 && (
-              <div className="w-[20px] h-[20px] absolute bg-green-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
+              <div className="w-[20px] h-[20px] absolute bg-[#088178] rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
                 {card_product_count}
               </div>
             )}
@@ -159,7 +157,7 @@ const wishlist_count= 6
               <AiFillHeart />
             </span>
             {wishlist_count !== 0 && (
-              <div className="w-[20px] h-[20px] absolute bg-green-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
+              <div className="w-[20px] h-[20px] absolute bg-[#088178] rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
                 {wishlist_count}
               </div>
             )}

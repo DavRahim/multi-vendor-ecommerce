@@ -1,9 +1,10 @@
 import { lazy } from "react";
 
-
 const SellerDashboard = lazy(() =>
   import("../../views/seller/SellerDashboard")
 );
+const AllBanners = lazy(() => import("../../views/seller/AllBanners"));
+const AddBanners = lazy(() => import("../../views/seller/AddBanners"));
 const AddProduct = lazy(() => import("../../views/seller/AddProduct"));
 const EditProduct = lazy(() => import("../../views/seller/EditProduct"));
 const Products = lazy(() => import("../../views/seller/Products"));
@@ -97,6 +98,18 @@ export const sellerRouts = [
   {
     path: "/seller/dashboard/chat-customer",
     element: <SellerToCustomer />,
+    role: "seller",
+    status: "active",
+  },
+  {
+    path: "/seller/dashboard/banners",
+    element: <AllBanners />,
+    role: "seller",
+    status: "active",
+  },
+  {
+    path: "/seller/dashboard/add-banners/:productId",
+    element: <AddBanners />,
     role: "seller",
     status: "active",
   },

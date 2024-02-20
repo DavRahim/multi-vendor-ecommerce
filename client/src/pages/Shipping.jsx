@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { place_order } from "../store/Reducers/orderReducer";
+import { Helmet } from "react-helmet-async";
 
 const Shipping = () => {
   const navigate = useNavigate();
@@ -16,7 +17,6 @@ const Shipping = () => {
     state: { products, price, shipping_fee, items },
   } = useLocation();
 
-  console.log(price, shipping_fee, items);
   const [state, setState] = useState({
     name: "",
     address: "",
@@ -56,8 +56,11 @@ const Shipping = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Shopping | R_S ecommerce </title>
+      </Helmet>
       <Header />
-      <section className='bg-[url("http://localhost:5173/order.jpg")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
+      <section className='bg-[url("../../public/order.jpg")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
         <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
           <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">

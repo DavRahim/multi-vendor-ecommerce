@@ -4,12 +4,13 @@ import { FaFacebookF } from "react-icons/fa";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
-import login from "../assets/login.jpg";
+import login from "../assets/login.png";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { customer_register } from "../store/Reducers/authReducer";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const Register = () => {
   const register = (e) => {
     e.preventDefault();
     dispatch(customer_register(state));
-    console.log(state);
+    // console.log(state);
   };
   useEffect(() => {
     if (successMessage) {
@@ -47,6 +48,9 @@ const Register = () => {
   }, [successMessage, errorMessage]);
   return (
     <div>
+      <Helmet>
+        <title>Register | R_S ecommerce </title>
+      </Helmet>
       {loader && (
         <div className="w-screen h-screen flex justify-center items-center fixed left-0 top-0 bg-[#38303033] z-[999]">
           <FadeLoader />
@@ -101,7 +105,7 @@ const Register = () => {
                       required
                     />
                   </div>
-                  <button className="px-8 w-full py-2 bg-purple-500 shadow-lg hover:shadow-indigo-500/30 text-white rounded-md">
+                  <button className="px-8 w-full py-2 bg-[#088178] shadow-lg hover:shadow-indigo-500/30 text-white rounded-md">
                     Register
                   </button>
                 </form>
@@ -129,6 +133,19 @@ const Register = () => {
                   <Link className="text-blue-500" to="/login">
                     Login
                   </Link>
+                </p>
+              </div>
+              <div className="text-center text-slate-600 pt-1">
+                <p>
+                  <a
+                    target="_black"
+                    href="http://localhost:5173/register"
+                    className="text-blue-500"
+                    to="/login"
+                  >
+                    Register{" "}
+                  </a>
+                  seller account
                 </p>
               </div>
             </div>

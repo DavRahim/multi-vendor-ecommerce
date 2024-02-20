@@ -26,7 +26,7 @@ const Products = ({ title, products }) => {
   const ButtonGroup = ({ next, previous }) => {
     return (
       <div className="flex justify-between items-center">
-        <div className="text-xl font-bold text-slate-600">{title}</div>
+        <div className="text-xl font-bold text-[#333]">{title}</div>
         <div className="flex justify-center items-center gap-3 text-slate-600">
           <button
             onClick={() => previous()}
@@ -68,7 +68,7 @@ const Products = ({ title, products }) => {
                   <Link
                     key={j}
                     className="flex justify-start items-start"
-                    to="#"
+                    to={`/product/details/${pl.slug}`}
                   >
                     <img
                       className="w-[110px] h-[110px]"

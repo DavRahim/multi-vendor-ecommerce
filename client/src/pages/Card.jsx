@@ -12,6 +12,7 @@ import {
   quantity_dec,
   quantity_inc,
 } from "../store/Reducers/cardReducer";
+import { Helmet } from "react-helmet-async";
 
 const Card = () => {
   const dispatch = useDispatch();
@@ -67,12 +68,18 @@ const Card = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Cart | R_S ecommerce </title>
+      </Helmet>
       <Header />
-      <section className='bg-[url("http://localhost:5173/card.jpg")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
+      <section
+        className={`bg-[url('../../public/card.jpg')] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left`}
+      >
         <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
           <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">
-              <h2 className="text-3xl font-bold">Shop.my</h2>
+              <h2 className="text-5xl font-bold">#stayhome</h2>
+              <p>Save more with coupons & up to 70% off!</p>
               <div className="flex justify-center items-center gap-2 text-2xl w-full">
                 <Link to="/">Home</Link>
                 <span className="pt-2">
@@ -92,7 +99,7 @@ const Card = () => {
                 <div className="pr-3 md-lg:pr-0">
                   <div className="flex flex-col gap-3">
                     <div className="bg-white p-4">
-                      <h2 className="text-md text-green-500 font-semibold">
+                      <h2 className="text-md text-[#088178] font-semibold">
                         Stock Products {card_products.length}
                       </h2>
                     </div>

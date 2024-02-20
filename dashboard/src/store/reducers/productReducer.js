@@ -8,7 +8,7 @@ export const add_product = createAsyncThunk(
       const { data } = await api.post("/product-add", product, {
         withCredentials: true,
       });
-      console.log(data);
+      // console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -42,7 +42,7 @@ export const get_Products = createAsyncThunk(
           withCredentials: true,
         }
       );
-      console.log(data);
+      // console.log(data);
 
       return fulfillWithValue(data);
     } catch (error) {

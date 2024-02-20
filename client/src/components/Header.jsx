@@ -15,17 +15,19 @@ import {
 } from "react-icons/ai";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import language from "../assets/language.png";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo2.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  get_card_products,
+  get_wishlist_products,
+} from "../store/Reducers/cardReducer";
+import SearchValues from "./test component/SearchValues";
 
 const Header = () => {
-  const { userInfo } = useSelector(
-    (state) => state.auth
-  );
-
+  const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
   const { categorys } = useSelector((state) => state.home);
   const [showShidebar, setShowShidebar] = useState(true);
   const [categoryShow, setCategoryShow] = useState(true);
@@ -33,12 +35,12 @@ const Header = () => {
   const [category, setCategory] = useState("");
   const { pathname } = useLocation();
   const navigate = useNavigate();
-   const search = () => {
-     navigate(`/products/search?category=${category}&&value=${searchValue}`);
-   };
-   const { card_product_count, wishlist_count } = useSelector(
-     (state) => state.card
-   );
+  const search = () => {
+    navigate(`/products/search?category=${category}&&value=${searchValue}`);
+  };
+  const { card_product_count, wishlist_count } = useSelector(
+    (state) => state.card
+  );
   const redirect_card_page = () => {
     if (userInfo) {
       navigate(`/card`);
@@ -46,10 +48,62 @@ const Header = () => {
       navigate(`/login`);
     }
   };
-  
+
+  useEffect(() => {
+    if (userInfo) {
+      dispatch(get_card_products(userInfo.id));
+      dispatch(get_wishlist_products(userInfo.id));
+    }
+  }, [userInfo]);
+
+  const [navbarY, setNavbarY] = useState(false);
+
+  const navbarH = () => {
+    if (window.scrollY) {
+      setNavbarY(true);
+    } else {
+      setNavbarY(false);
+    }
+  };
+
+  window.addEventListener("scroll", navbarH);
+
+  // start
+  const { products } = useSelector((state) => state.home);
+  const [searchTerm, setSearchTerm] = useState("")
+  const [searchData, setSearchData] = useState(null);
+  console.log(searchData);
+  const handleSearchChange = (e) => {
+    const term = e.target.value;
+    setSearchValue(term);
+    setSearchTerm(term);
+
+    if(term){
+      const filteredProducts =
+        products &&
+        products.filter((product) =>
+          product.name.toLowerCase().includes(term.toLowerCase())
+        );
+      setSearchData(filteredProducts);
+    }else{
+      setSearchData(null);
+    }
+
+    
+  };
+  // end
+
   return (
-    <div className="w-full bg-white">
-      <div className="header-top bg-[#eeeeee] md-lg:hidden">
+    <div
+      className={`w-full bg-white sticky transition${
+        navbarY ? "shadow-md" : ""
+      } top-0 z-[99]`}
+    >
+      <div
+        className={`header-top bg-[#e3e6f3] md-lg:hidden ${
+          navbarY ? "hidden transition-all" : ""
+        }`}
+      >
         <div className="w-[85%] lg:w-[90%] mx-auto">
           <div className="flex w-full justify-between items-center h-[50px] text-slate-500">
             <ul className="flex justify-start items-center gap-8">
@@ -57,9 +111,13 @@ const Header = () => {
                 <span>
                   <GrMail />
                 </span>
-                <span>sheikhfarid@gmail.com</span>
+                <span>{userInfo?.email}</span>
               </li>
-              <span>Multi vendor e-commerce</span>
+              <p className="flex gap-4">
+                <span>Become a seller</span> {"   "}
+                <span>Donates</span> {"  "}
+                <span>Helps & support</span>
+              </p>
             </ul>
             <div>
               <div className="flex justify-center items-center gap-10">
@@ -113,13 +171,17 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="w-white">
+      <div className="w-white ">
         <div className="w-[85%] lg:w-[90%] mx-auto">
           <div className="h-[80px] md-lg:h-[100px] flex justify-between items-center flex-wrap">
             <div className="md-lg:w-full w-3/12 md-lg:pt-4">
               <div className="flex justify-between items-center">
-                <Link to="/">
-                  <img src={logo} alt="logo" />
+                <Link className="w-[240px] h-[80px] py-1" to="/">
+                  <img
+                    className="w-full h-full object-contain"
+                    src={logo}
+                    alt="logo"
+                  />
                 </Link>
                 <div
                   className=" justify-center items-center w-[30px] h-[30px] bg-white text-slate-600 border border-slate-600 rounded-sm cursor-pointer lg:hidden md-lg:flex xl:hidden hidden"
@@ -137,8 +199,8 @@ const Header = () => {
                   <li>
                     <Link
                       to={"/"}
-                      className={`p-2 block ${
-                        pathname === "/" ? "text-[#7fad39]" : "text-slate-600"
+                      className={`p-2 block hover:text-[#088178] ${
+                        pathname === "/" ? "text-[#088178]" : "text-slate-600"
                       }`}
                     >
                       Home
@@ -147,9 +209,9 @@ const Header = () => {
                   <li>
                     <Link
                       to="/shops"
-                      className={`p-2 block ${
+                      className={`p-2 block hover:text-[#088178] ${
                         pathname === "/shops"
-                          ? "text-[#7fad39]"
+                          ? "text-[#088178]"
                           : "text-slate-600"
                       }`}
                     >
@@ -158,9 +220,10 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
-                      className={`p-2 block ${
+                      to={"/blog"}
+                      className={`p-2 block hover:text-[#088178] ${
                         pathname === "/blog"
-                          ? "text-[#7fad39]"
+                          ? "text-[#088178]"
                           : "text-slate-600"
                       }`}
                     >
@@ -169,9 +232,10 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
-                      className={`p-2 block ${
+                      to={"/about"}
+                      className={`p-2 block hover:text-[#088178] ${
                         pathname === "/about"
-                          ? "text-[#7fad39]"
+                          ? "text-[#088178]"
                           : "text-slate-600"
                       }`}
                     >
@@ -180,9 +244,10 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
-                      className={`p-2 block ${
+                      to={"/contact"}
+                      className={`p-2 block hover:text-[#088178] ${
                         pathname === "/contact"
-                          ? "text-[#7fad39]"
+                          ? "text-[#088178]"
                           : "text-slate-600"
                       }`}
                     >
@@ -202,7 +267,7 @@ const Header = () => {
                         <AiFillHeart />
                       </span>
                       {wishlist_count !== 0 && (
-                        <div className="w-[20px] h-[20px] absolute bg-green-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
+                        <div className="w-[20px] h-[20px] absolute bg-[#088178] rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
                           {wishlist_count}
                         </div>
                       )}
@@ -215,7 +280,7 @@ const Header = () => {
                         <AiFillShopping />
                       </Link>
                       {card_product_count !== 0 && (
-                        <div className="w-[20px] h-[20px] absolute bg-green-500 rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
+                        <div className="w-[20px] h-[20px] absolute bg-[#088178] rounded-full text-white flex justify-center items-center -top-[3px] -right-[5px]">
                           {card_product_count}
                         </div>
                       )}
@@ -277,7 +342,7 @@ const Header = () => {
               <li>
                 <Link
                   className={`py-2 block ${
-                    pathname === "/" ? "text-[#7fad39]" : "text-slate-600"
+                    pathname === "/" ? "text-[#088178]" : "text-slate-600"
                   }`}
                 >
                   Home
@@ -285,8 +350,9 @@ const Header = () => {
               </li>
               <li>
                 <Link
+                  to={"/shops"}
                   className={`py-2 block ${
-                    pathname === "/shop" ? "text-[#7fad39]" : "text-slate-600"
+                    pathname === "/shops" ? "text-[#088178]" : "text-slate-600"
                   }`}
                 >
                   Shop
@@ -294,8 +360,9 @@ const Header = () => {
               </li>
               <li>
                 <Link
+                  to={"/blog"}
                   className={`py-2 block ${
-                    pathname === "/blog" ? "text-[#7fad39]" : "text-slate-600"
+                    pathname === "/blog" ? "text-[#088178]" : "text-slate-600"
                   }`}
                 >
                   Blog
@@ -303,8 +370,9 @@ const Header = () => {
               </li>
               <li>
                 <Link
+                  to={"/about"}
                   className={`py-2 block ${
-                    pathname === "/about" ? "text-[#7fad39]" : "text-slate-600"
+                    pathname === "/about" ? "text-[#088178]" : "text-slate-600"
                   }`}
                 >
                   About
@@ -312,9 +380,10 @@ const Header = () => {
               </li>
               <li>
                 <Link
+                  to={"/contact"}
                   className={`py-2 block ${
                     pathname === "/contact"
-                      ? "text-[#7fad39]"
+                      ? "text-[#088178]"
                       : "text-slate-600"
                   }`}
                 >
@@ -361,13 +430,17 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="w-[85%] lg:w-[90%] mx-auto">
+      <div
+        className={`w-[85%] lg:w-[90%] mx-auto transition ${
+          navbarY ? "hidden" : ""
+        }`}
+      >
         <div className="flex w-full flex-wrap md-lg:gap-8">
           <div className="w-3/12 md-lg:w-full">
             <div className="bg-white relative">
               <div
                 onClick={() => setCategoryShow(!categoryShow)}
-                className="h-[50px] bg-violet-400 text-white flex justify-center md-lg:justify-between md-lg:px-6 items-center gap-3 font-bold text-md cursor-pointer"
+                className="h-[50px] bg-[#088178] text-white flex justify-center md-lg:justify-between md-lg:px-6 items-center gap-3 font-bold text-md cursor-pointer"
               >
                 <div className="flex justify-center items-center gap-3">
                   <span>
@@ -384,7 +457,7 @@ const Header = () => {
                   categoryShow ? "h-0" : "h-[400px]"
                 } overflow-hidden transition-all md-lg:relative duration-500 absolute z-[99999] bg-white w-full border-x`}
               >
-                <ul className="py-2 text-slate-600 font-medium h-full overflow-auto">
+                <ul className="py-2 text-slate-600 font-medium h-full overflow-auto  no-scrollbar">
                   {categorys.map((c, i) => {
                     return (
                       <li
@@ -412,7 +485,7 @@ const Header = () => {
           <div className="w-9/12 pl-8 md-lg:pl-0 md-lg:w-full">
             <div className="flex flex-wrap w-full justify-between items-center md-lg:gap-6">
               <div className="w-8/12 md-lg:w-full">
-                <div className="flex border h-[50px] items-center relative gap-5">
+                <form className="flex border h-[50px] items-center relative gap-5">
                   <div className="relative after:absolute after:h-[25px] after:w-[1px] after:bg-[#afafaf] after:-right-[15px] md:hidden">
                     <select
                       onChange={(e) => setCategory(e.target.value)}
@@ -430,7 +503,9 @@ const Header = () => {
                   </div>
                   <input
                     className="w-full relative bg-transparent text-slate-500 outline-0 px-3 h-full"
-                    onChange={(e) => setSearchValue(e.target.value)}
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    // onChange={(e) => setSearchValue(e.target.value)}
                     type="text"
                     name=""
                     id=""
@@ -438,11 +513,15 @@ const Header = () => {
                   />
                   <button
                     onClick={search}
-                    className="bg-violet-400 right-0 absolute px-8 h-full font-semibold uppercase text-white"
+                    className="bg-[#088178] right-0 absolute px-8 h-full font-semibold uppercase text-white"
                   >
                     Search
                   </button>
-                </div>
+                </form>
+
+                {/* start */}
+                <SearchValues searchData={searchData} />
+                {/* end */}
               </div>
               <div className="w-4/12 block md-lg:hidden pl-2 md-lg:w-full md-lg:pl-0">
                 <div className="w-full flex justify-end md-lg:justify-start gap-3 items-center">

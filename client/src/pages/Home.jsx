@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
 import Banner from "../components/Banner";
 import Categorys from "../components/Categorys";
@@ -6,24 +7,32 @@ import Header from "../components/Header";
 import FeatureProducts from "../components/products/FeatureProducts";
 import Products from "../components/products/Products";
 import { useDispatch, useSelector } from "react-redux";
-import {  get_products } from "../store/Reducers/homeReducer";
+import { get_products } from "../store/Reducers/homeReducer";
 
 const Home = () => {
-   const dispatch = useDispatch();
-   const { products, latest_product, topRated_product, discount_product } = useSelector((state) => state.home);
-// console.log(latest_product);
-   useEffect(() => {
-     dispatch(get_products());
-   }, [dispatch]);
+  const dispatch = useDispatch();
+  const { products, latest_product, topRated_product, discount_product } =
+    useSelector((state) => state.home);
+  // console.log(latest_product);
+  useEffect(() => {
+    dispatch(get_products());
+  }, [dispatch]);
   return (
     <div className="w-full">
+      <Helmet>
+        <title>Home | R_S ecommerce </title>
+      </Helmet>
       <Header />
       <Banner />
       <div className="my-4">
         <Categorys />
       </div>
       <div className="py-[45px]">
-        <FeatureProducts products={products} />
+        <FeatureProducts
+          header={"Feature Products "}
+          title={"Best selling product in our shop "}
+          products={products}
+        />
       </div>
       <div className="py-10">
         <div className="w-[85%] flex flex-wrap mx-auto">

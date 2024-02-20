@@ -1,36 +1,19 @@
 import { useEffect, useState } from "react";
-
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
-// import { useDispatch, useSelector } from "react-redux";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import Ratings from "../components/Ratings";
 import { AiFillHeart } from "react-icons/ai";
 import { FaFacebookF, FaLinkedin } from "react-icons/fa";
 import { AiFillGithub, AiOutlineTwitter } from "react-icons/ai";
-// import Reviews from "../components/Reviews";
-// import { get_product } from "../store/reducers/homeReducer";
-// import {
-//   add_to_card,
-//   messageClear,
-//   add_to_wishlist,
-// } from "../store/reducers/cardReducer";
 import toast from "react-hot-toast";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-// import product1 from "../assets/products/1.webp";
-// import product2 from "../assets/products/2.webp";
-// import product3 from "../assets/products/3.webp";
-// import product4 from "../assets/products/4.webp";
-// import product5 from "../assets/products/5.webp";
-// import product6 from "../assets/products/6.webp";
-// import product7 from "../assets/products/7.webp";
 import Reviews from "../components/Reviews";
 import { useDispatch, useSelector } from "react-redux";
 import { get_product } from "../store/Reducers/homeReducer";
@@ -39,215 +22,13 @@ import {
   add_to_wishlist,
   messageClear,
 } from "../store/Reducers/cardReducer";
+import { Helmet } from "react-helmet-async";
 
 const Details = () => {
-  // const product = {
-  //   _id: {
-  //     $oid: "654a61f6cc4a8902178fb1c3",
-  //   },
-  //   sellerId: {
-  //     $oid: "654534c3af0febfb13ebfef4",
-  //   },
-  //   name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-  //   slug: "sunslick-smapo",
-  //   category: "mobile",
-  //   brand: "smapo",
-  //   price: 12,
-  //   stock: 10,
-  //   discount: 22,
-  //   description:
-  //     "Perfumes are a great way to help girls and boys feel fresh without the overpowering element of perfume or cologne. For men, apply the body spray on your chest and neck, and under your armpits. For women, apply the body spray on your pulse points, clothes, and hair. Body sprays are a great way to help girls and boys feel fresh without the overpowering element of perfume or cologne. For men, apply the body spray on your chest and neck, and under your armpits. For women, apply the body spray on your pulse points, clothes, and hair.",
-  //   shopName: "Rahim sports",
-  //   images: [
-  //     product1,
-  //     product2,
-  //     product3,
-  //     product4,
-  //     product5,
-  //     product6,
-  //     product7,
-  //     product4,
-  //     product5,
-  //     product6,
-  //     product7,
-  //   ],
-  //   rating: 4,
-  //   createdAt: {
-  //     $date: "2023-11-07T16:12:38.954Z",
-  //   },
-  //   updatedAt: {
-  //     $date: "2023-11-11T17:37:45.684Z",
-  //   },
-  //   __v: 0,
-  // };
-
-  // const moreProducts = [
-  //   {
-  //     _id: {
-  //       $oid: "654a61f6cc4a8902178fb1c3",
-  //     },
-  //     sellerId: {
-  //       $oid: "654534c3af0febfb13ebfef4",
-  //     },
-  //     name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-  //     slug: "sunslick-smapo",
-  //     category: "mobile",
-  //     brand: "smapo",
-  //     price: 12,
-  //     stock: 12,
-  //     discount: 22,
-  //     rating: 3,
-  //     description: "sZFvzsdf zsdvzd zsfv v",
-  //     shopName: "Rahim sports",
-  //     images: [product1, product2, product3, product4, product5, product6],
-
-  //     createdAt: {
-  //       $date: "2023-11-07T16:12:38.954Z",
-  //     },
-  //     updatedAt: {
-  //       $date: "2023-11-11T17:37:45.684Z",
-  //     },
-  //     __v: 0,
-  //   },
-  //   {
-  //     _id: {
-  //       $oid: "654a61f6cc4a8902178fb1c3",
-  //     },
-  //     sellerId: {
-  //       $oid: "654534c3af0febfb13ebfef4",
-  //     },
-  //     name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-  //     slug: "sunslick-smapo",
-  //     category: "mobile",
-  //     brand: "smapo",
-  //     price: 12,
-  //     stock: 12,
-  //     discount: 22,
-  //     rating: 3,
-  //     description: "sZFvzsdf zsdvzd zsfv v",
-  //     shopName: "Rahim sports",
-  //     images: [ product2, product3, product4, product5, product6],
-
-  //     createdAt: {
-  //       $date: "2023-11-07T16:12:38.954Z",
-  //     },
-  //     updatedAt: {
-  //       $date: "2023-11-11T17:37:45.684Z",
-  //     },
-  //     __v: 0,
-  //   },
-  // ];
-  // const relatedProducts = [
-  //   {
-  //     _id: {
-  //       $oid: "654a61f6cc4a8902178fb1c3",
-  //     },
-  //     sellerId: {
-  //       $oid: "654534c3af0febfb13ebfef4",
-  //     },
-  //     name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-  //     slug: "sunslick-smapo",
-  //     category: "mobile",
-  //     brand: "smapo",
-  //     price: 12,
-  //     stock: 12,
-  //     discount: 22,
-  //     description: "sZFvzsdf zsdvzd zsfv v",
-  //     shopName: "Rahim sports",
-  //     images: [product2, product3, product4, product5, product6],
-  //     rating: 0,
-  //     createdAt: {
-  //       $date: "2023-11-07T16:12:38.954Z",
-  //     },
-  //     updatedAt: {
-  //       $date: "2023-11-11T17:37:45.684Z",
-  //     },
-  //     __v: 0,
-  //   },
-  //   {
-  //     _id: {
-  //       $oid: "654a61f6cc4a8902178fb1c3",
-  //     },
-  //     sellerId: {
-  //       $oid: "654534c3af0febfb13ebfef4",
-  //     },
-  //     name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-  //     slug: "sunslick-smapo",
-  //     category: "mobile",
-  //     brand: "smapo",
-  //     price: 12,
-  //     stock: 12,
-  //     discount: 22,
-  //     description: "sZFvzsdf zsdvzd zsfv v",
-  //     shopName: "Rahim sports",
-  //     images: [product2, product3, product4, product5, product6],
-  //     rating: 0,
-  //     createdAt: {
-  //       $date: "2023-11-07T16:12:38.954Z",
-  //     },
-  //     updatedAt: {
-  //       $date: "2023-11-11T17:37:45.684Z",
-  //     },
-  //     __v: 0,
-  //   },
-  //   {
-  //     _id: {
-  //       $oid: "654a61f6cc4a8902178fb1c3",
-  //     },
-  //     sellerId: {
-  //       $oid: "654534c3af0febfb13ebfef4",
-  //     },
-  //     name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-  //     slug: "sunslick-smapo",
-  //     category: "mobile",
-  //     brand: "smapo",
-  //     price: 12,
-  //     stock: 12,
-  //     discount: 22,
-  //     description: "sZFvzsdf zsdvzd zsfv v",
-  //     shopName: "Rahim sports",
-  //     images: [ product3, product4, product5, product6],
-  //     rating: 0,
-  //     createdAt: {
-  //       $date: "2023-11-07T16:12:38.954Z",
-  //     },
-  //     updatedAt: {
-  //       $date: "2023-11-11T17:37:45.684Z",
-  //     },
-  //     __v: 0,
-  //   },
-  //   {
-  //     _id: {
-  //       $oid: "654a61f6cc4a8902178fb1c3",
-  //     },
-  //     sellerId: {
-  //       $oid: "654534c3af0febfb13ebfef4",
-  //     },
-  //     name: "Remax RPP-28 Retro Mini Radio Power Bank - 9000MAh - Blue",
-  //     slug: "sunslick-smapo",
-  //     category: "mobile",
-  //     brand: "smapo",
-  //     price: 12,
-  //     stock: 12,
-  //     discount: 22,
-  //     description: "sZFvzsdf zsdvzd zsfv v",
-  //     shopName: "Rahim sports",
-  //     images: [ product4, product5, product6],
-  //     rating: 0,
-  //     createdAt: {
-  //       $date: "2023-11-07T16:12:38.954Z",
-  //     },
-  //     updatedAt: {
-  //       $date: "2023-11-11T17:37:45.684Z",
-  //     },
-  //     __v: 0,
-  //   },
-  // ];
-
   const navigate = useNavigate();
   const { slug } = useParams();
   const dispatch = useDispatch();
-  const { product, relatedProducts, moreProducts } = useSelector(
+  const { product, relatedProducts, totalReview, moreProducts } = useSelector(
     (state) => state.home
   );
   const { userInfo } = useSelector((state) => state.auth);
@@ -377,15 +158,23 @@ const Details = () => {
       },
     });
   };
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div>
+      <Helmet>
+        <title>Details | R_S ecommerce </title>
+      </Helmet>
       <Header />
-      <div className='bg-[url("http://localhost:5173/order.jpg")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
-        <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
+      <div
+        className={`bg-[url('../../public/shop.gif')] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left`}
+      >
+        <div className="absolute left-0 top-0 w-full h-full bg-[#1111118a]">
           <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">
-              <h2 className="text-3xl font-bold">Shop.my</h2>
+              <h2 className="text-5xl font-bold">welcome Our Shop</h2>
+              <p>Save more with coupons & up to 70% off!</p>
             </div>
           </div>
         </div>
@@ -409,9 +198,9 @@ const Details = () => {
         <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto pb-16">
           <div className="grid grid-cols-2 md-lg:grid-cols-1 gap-8">
             <div>
-              <div className="p-5 border">
+              <div className="p-5 border w-full h-[500px] md-lg:h-[210px]">
                 <img
-                  className="h-[500px] w-full"
+                  className="w-full h-full object-contain "
                   src={image ? image : product.images?.[0]}
                   alt=""
                 />
@@ -447,7 +236,7 @@ const Details = () => {
                 <div className="flex text-xl">
                   <Ratings ratings={product?.rating} />
                 </div>
-                <span className="text-green-500">(23 reviews)</span>
+                <span className="text-[#088178]">({totalReview} reviews)</span>
               </div>
               <div className="text-2xl text-red-500 font-bold flex gap-3">
                 {product.discount !== 0 ? (
@@ -485,7 +274,7 @@ const Details = () => {
                     <div>
                       <button
                         onClick={add_card}
-                        className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-purple-500/40 bg-purple-500 text-white"
+                        className="px-8 rounded py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-[#088178]/40 bg-[#088178] text-white"
                       >
                         Add To Card
                       </button>
@@ -497,7 +286,7 @@ const Details = () => {
                 <div>
                   <div
                     onClick={add_wishlist}
-                    className="h-[50px] w-[50px] flex justify-center items-center cursor-pointer hover:shadow-lg hover:shadow-cyan-500/40 bg-cyan-500 text-white"
+                    className="h-[50px] w-[50px] flex justify-center items-center cursor-pointer hover:shadow-lg hover:shadow-cyan-500/40 bg-[#088178] text-white rounded"
                   >
                     <AiFillHeart />
                   </div>
@@ -519,7 +308,7 @@ const Details = () => {
                   <ul className="flex justify-start items-center gap-3">
                     <li>
                       <a
-                        className="w-[38px] h-[38px] hover:bg-[#7fad39] hover:text-white flex justify-center items-center bg-indigo-500 rounded-full text-white"
+                        className="w-[38px] h-[38px] hover:bg-[#088178] hover:text-white flex justify-center items-center bg-indigo-500 rounded-full text-white"
                         href="#"
                       >
                         <FaFacebookF />
@@ -527,7 +316,7 @@ const Details = () => {
                     </li>
                     <li>
                       <a
-                        className="w-[38px] h-[38px] hover:bg-[#7fad39] hover:text-white flex justify-center items-center bg-cyan-500 rounded-full text-white"
+                        className="w-[38px] h-[38px] hover:bg-[#088178] hover:text-white flex justify-center items-center bg-cyan-500 rounded-full text-white"
                         href="#"
                       >
                         <AiOutlineTwitter />
@@ -535,7 +324,7 @@ const Details = () => {
                     </li>
                     <li>
                       <a
-                        className="w-[38px] h-[38px] hover:bg-[#7fad39] hover:text-white flex justify-center items-center bg-[#0072b1] rounded-full text-white"
+                        className="w-[38px] h-[38px] hover:bg-[#088178] hover:text-white flex justify-center items-center bg-[#0072b1] rounded-full text-white"
                         href="#"
                       >
                         <FaLinkedin />
@@ -543,7 +332,7 @@ const Details = () => {
                     </li>
                     <li>
                       <a
-                        className="w-[38px] h-[38px] hover:bg-[#7fad39] hover:text-white flex justify-center items-center bg-[#171515] rounded-full text-white"
+                        className="w-[38px] h-[38px] hover:bg-[#088178] hover:text-white flex justify-center items-center bg-[#171515] rounded-full text-white"
                         href="#"
                       >
                         <AiFillGithub />
@@ -556,7 +345,7 @@ const Details = () => {
                 {product.stock ? (
                   <button
                     onClick={buy}
-                    className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-emerald-500/40 bg-emerald-500 text-white"
+                    className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-emerald-500/40 bg-[#088178] rounded text-white"
                   >
                     Buy Now
                   </button>
@@ -565,7 +354,7 @@ const Details = () => {
                 )}
                 <Link
                   to={`/dashboard/chat/${product.sellerId}`}
-                  className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-lime-500/40 bg-lime-500 text-white block"
+                  className="px-8 py-3 h-[50px] cursor-pointer hover:shadow-lg hover:shadow-lime-500/40 bg-[#088178] rounded text-white block"
                 >
                   Chat Seller
                 </Link>
@@ -582,9 +371,9 @@ const Details = () => {
                 <div className="grid grid-cols-2">
                   <button
                     onClick={() => setState("reviews")}
-                    className={`py-1 hover:text-white px-5 hover:bg-green-500 ${
+                    className={`py-1 hover:text-white px-5 hover:bg-[#088178] ${
                       state === "reviews"
-                        ? "bg-green-500 text-white"
+                        ? "bg-[#088178] text-white"
                         : "bg-slate-200 text-slate-700"
                     } rounded-sm`}
                   >
@@ -592,9 +381,9 @@ const Details = () => {
                   </button>
                   <button
                     onClick={() => setState("description")}
-                    className={`py-1 px-5 hover:text-white hover:bg-green-500 ${
+                    className={`py-1 px-5 hover:text-white hover:bg-[#088178] ${
                       state === "description"
-                        ? "bg-green-500 text-white"
+                        ? "bg-[#088178] text-white"
                         : "bg-slate-200 text-slate-700"
                     } rounded-sm`}
                   >
@@ -605,7 +394,6 @@ const Details = () => {
                   {state === "reviews" ? (
                     <Reviews product={product} />
                   ) : (
-                    
                     <p className="py-5 text-slate-600">{product.description}</p>
                   )}
                 </div>
@@ -634,7 +422,7 @@ const Details = () => {
                         </div>
                         <h2 className="text-slate-600 py-1">{p.name}</h2>
                         <div className="flex gap-2">
-                          <h2 className="text-[#6699ff] text-lg font-bold">
+                          <h2 className="text-[#088178] text-lg font-bold">
                             ${p.price}
                           </h2>
                           <div className="flex items-center gap-2">
@@ -693,7 +481,7 @@ const Details = () => {
                           {p.name}
                         </h2>
                         <div className="flex justify-start items-center gap-3">
-                          <h2 className="text-[#6699ff] text-lg font-bold">
+                          <h2 className="text-[#088178] text-lg font-bold">
                             ${p.price}
                           </h2>
                           <div className="flex">

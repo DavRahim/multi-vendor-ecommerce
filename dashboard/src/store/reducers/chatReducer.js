@@ -3,12 +3,12 @@ import api from "../../api/api";
 export const get_customers = createAsyncThunk(
   "chat/get_customers",
   async (sellerId, { rejectWithValue, fulfillWithValue }) => {
-    console.log(sellerId);
+    // console.log(sellerId);
     try {
       const { data } = await api.get(`/chat/seller/get-customers/${sellerId}`, {
         withCredentials: true,
       });
-      console.log(data);
+      // console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -54,7 +54,7 @@ export const get_sellers = createAsyncThunk(
       const { data } = await api.get(`/chat/admin/get-sellers`, {
         withCredentials: true,
       });
-      console.log(data);
+      // console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
       return rejectWithValue(error.response.data);

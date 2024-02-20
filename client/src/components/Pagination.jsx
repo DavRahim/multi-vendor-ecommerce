@@ -1,5 +1,5 @@
-
 import { BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const Pagination = ({
   pageNumber,
@@ -33,9 +33,9 @@ const Pagination = ({
           className={`
                     ${
                       pageNumber === i
-                        ? "bg-slate-300 shadow-lg shadow-slate-300/50 text-slate-800"
-                        : "bg-slate-300 hover:bg-slate-300 shadow-lg hover:shadow-slate-300/50 hover:text-slate-800 text-slate-800"
-                    } w-[33px] h-[33px] rounded-full flex justify-center items-center cursor-pointer`}
+                        ? "text-center shadow-lg shadow-slate-300/50  bg-[#088178] px-[20px] py-[13px] rounded-md font-semibold text-white cursor-pointer"
+                        : "text-center shadow-lg shadow-slate-300/50  bg-[#088178] px-[20px] py-[13px] rounded-md font-semibold text-white  cursor-pointer hover:bg-slate-300 hover:shadow-slate-300/50 hover:text-slate-800"
+                    }rounded-full flex justify-center items-center cursor-pointer`}
         >
           {i}
         </li>
@@ -45,22 +45,22 @@ const Pagination = ({
   };
 
   return (
-    <ul className="flex gap-3">
+    <ul className="flex gap-3 justify-center">
       {pageNumber > 1 && (
         <li
           onClick={() => setPageNumber(pageNumber - 1)}
-          className="w-[33px] h-[33px] rounded-full flex justify-center items-center bg-slate-300 text-slate-800 cursor-pointer"
+          className="text-center shadow-lg shadow-slate-300/50  bg-[#088178] px-[20px] py-[13px] rounded-md font-semibold text-white cursor-pointer"
         >
-          <BsChevronDoubleLeft />
+          <FaArrowLeft />
         </li>
       )}
       {createBtn()}
       {pageNumber < totalPage && (
         <li
           onClick={() => setPageNumber(pageNumber + 1)}
-          className="w-[33px] h-[33px] rounded-full flex justify-center items-center bg-slate-300 text-slate-800 cursor-pointer"
+          className="text-center shadow-lg shadow-slate-300/50  bg-[#088178] px-[20px] py-[13px] rounded-md font-semibold text-white cursor-pointer"
         >
-          <BsChevronDoubleRight />
+          <FaArrowRight />
         </li>
       )}
     </ul>

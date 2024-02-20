@@ -8,10 +8,10 @@ export const get_dashboard_index_data = createAsyncThunk(
       const { data } = await api.get(
         `/home/customer/gat-dashboard-data/${userId}`
       );
-      console.log(data);
+      // console.log(data);
       return fulfillWithValue(data);
     } catch (error) {
-      console.log(error.response.data);
+     rejectWithValue(error.response.data);
     }
   }
 );

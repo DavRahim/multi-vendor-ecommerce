@@ -55,6 +55,7 @@ export const allNav = [
     role: "admin",
     path: "/admin/dashboard/sellers-request",
   },
+
   {
     id: 8,
     title: "Chat Seller",
@@ -83,6 +84,20 @@ export const allNav = [
     role: "seller",
     path: "/seller/dashboard/products",
   },
+  {
+    id: 19,
+    title: "All Banner",
+    icon: <RiProductHuntLine />,
+    role: "seller",
+    path: "/seller/dashboard/banners",
+  },
+  // {
+  //   id: 18,
+  //   title: "Add Banner",
+  //   icon: <AiOutlinePlus />,
+  //   role: "seller",
+  //   path: "/seller/dashboard/add-banners",
+  // },
   {
     id: 12,
     title: "Discount Product",

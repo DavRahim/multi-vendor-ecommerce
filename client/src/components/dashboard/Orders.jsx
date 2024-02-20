@@ -19,7 +19,7 @@ const Orders = () => {
        for (let i = 0; i < ord.length; i++) {
          items = ord?.products[i]?.quantity + items;
        }
-       console.log(items);
+      //  console.log(items);
        navigate("/payment", {
          state: {
            price: ord?.price,

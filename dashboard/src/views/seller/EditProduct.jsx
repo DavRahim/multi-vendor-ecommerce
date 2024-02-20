@@ -14,8 +14,8 @@ const EditProduct = () => {
   const { product, loader, errorMessage, successMessage } = useSelector(
     (state) => state.product
   );
-  console.log(product);
-  console.log(productId);
+  // console.log(product);
+  // console.log(productId);
  
   useEffect(() => {
     dispatch(
@@ -95,7 +95,7 @@ const EditProduct = () => {
     setCategorys(product?.category);
     setImageShow(product?.images);
   }, [product]);
-  console.log(category);
+  // console.log(category);
   useEffect(() => {
     if (category.length > 0) {
       setAllCategory(category);

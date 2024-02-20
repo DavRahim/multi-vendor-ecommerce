@@ -149,6 +149,16 @@ app.use(cookieParser())
 
 app.use("/api", require("./routes/chatRoutes"));
 
+//dashboard rot
+app.use("/api", require("./routes/dashborad/dashboardIndexRoutes")); 
+
+//payments
+app.use("/api", require("./routes/paymentRoutes"));
+
+//banner
+app.use("/api", require("./routes/bannerRoutes"));
+
+
 app.use("/api", require("./routes/authRoutes"));
 app.use("/api", require("./routes/dashborad/categoryRoutes"));
 app.use("/api", require("./routes/dashborad/productRoutes"));
