@@ -72,7 +72,7 @@ const Header = () => {
   const { products } = useSelector((state) => state.home);
   const [searchTerm, setSearchTerm] = useState("")
   const [searchData, setSearchData] = useState(null);
-  console.log(searchData);
+  // console.log(searchData);
   const handleSearchChange = (e) => {
     const term = e.target.value;
     setSearchValue(term);

@@ -7,7 +7,6 @@ import { get_banners } from "../store/Reducers/homeReducer";
 const Banner = () => {
   const dispatch = useDispatch();
   const { banners } = useSelector((state) => state.home);
-  // console.log(banners);
 
  const responsive = {
    superLargeDesktop: {
