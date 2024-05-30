@@ -116,20 +116,20 @@ class cardController {
               price,
               products: p[i]
                 ? [
-                    ...p[i].products,
-                    {
-                      _id: stockProduct[j]._id,
-                      quantity: stockProduct[j].quantity,
-                      productInfo: tempProduct,
-                    },
-                  ]
+                  ...p[i].products,
+                  {
+                    _id: stockProduct[j]._id,
+                    quantity: stockProduct[j].quantity,
+                    productInfo: tempProduct,
+                  },
+                ]
                 : [
-                    {
-                      _id: stockProduct[j]._id,
-                      quantity: stockProduct[j].quantity,
-                      productInfo: tempProduct,
-                    },
-                  ],
+                  {
+                    _id: stockProduct[j]._id,
+                    quantity: stockProduct[j].quantity,
+                    productInfo: tempProduct,
+                  },
+                ],
             };
           }
         }
@@ -198,7 +198,7 @@ class cardController {
       });
       if (product) {
         responseReturn(res, 404, {
-          error: "Allready added",
+          error: "Already added",
         });
       } else {
         await wishlistModel.create(req.body);
